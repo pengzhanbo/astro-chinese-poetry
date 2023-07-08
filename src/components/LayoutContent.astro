@@ -1,0 +1,50 @@
+---
+import { hasSidebar } from '~/supports/sidebar'
+
+const sidebar = hasSidebar(Astro.url.pathname)
+---
+
+<div
+  id="LayoutContent"
+  class:list={['layout-content', { 'has-sidebar': sidebar }]}
+>
+  <slot />
+</div>
+
+<style>
+  .layout-content {
+    flex-grow: 1;
+    flex-shrink: 0;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .layout-content.is-home {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .layout-content.has-sidebar {
+    margin: 0;
+  }
+
+  @media (min-width: 960px) {
+    .layout-content {
+      padding-top: var(--nav-height);
+    }
+
+    .layout-content.has-sidebar {
+      margin: 0 0;
+      padding-left: var(--sidebar-width);
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .layout-content.has-sidebar {
+      padding-right: calc((100vw - var(--layout-max-width)) / 2);
+      padding-left: calc(
+        (100vw - var(--layout-max-width)) / 2 + var(--sidebar-width)
+      );
+    }
+  }
+</style>

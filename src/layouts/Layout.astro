@@ -1,36 +1,53 @@
 ---
+import '@fontsource/noto-sans-tc/chinese-traditional.css'
+import '~/styles/index.scss'
+
+import LayoutContent from '~/components/LayoutContent.astro'
+import Navbar from '~/components/Navbar.astro'
+import PageFooter from '~/components/PageFooter.astro'
+import Siderbar from '~/components/Sidebar/Siderbar.astro'
+import { siteTitle } from '~/config/site'
+
 export interface Props {
-	title: string;
+  title?: string
+  navFixed?: boolean
 }
 
-const { title } = Astro.props;
+const { title, navFixed } = Astro.props
+const pageTitle = title ? `${title} | ${siteTitle}` : siteTitle
 ---
 
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description">
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <div class="min-h-full w-full">
+      <Navbar fixed={!!navFixed} />
+      <Siderbar />
+      <LayoutContent>
+        <slot />
+        <PageFooter />
+      </LayoutContent>
+    </div>
+  </body>
 </html>
-<style is:global>
-	:root {
-		--accent: 124, 58, 237;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background-color: #F6F6F6;
-	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
-</style>
+
+<script>
+  // eslint-disable-next-line @typescript-eslint/no-extra-semi, prettier/prettier
+  ;(function () {
+    const userMode = localStorage.getItem('poetry-appearance')
+    const systemDarkMode =
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    if (userMode === 'dark' || (userMode !== 'light' && systemDarkMode)) {
+      document.documentElement.classList.add('dark')
+    }
+  })()
+</script>

@@ -1,0 +1,102 @@
+---
+import AutoLink from '~/components/AutoLink.astro'
+import type { LinkOptions } from '~/types'
+
+export interface Props {
+  prev?: LinkOptions
+  next?: LinkOptions
+}
+
+const { prev, next } = Astro.props
+---
+
+{
+  prev || next ? (
+    <div class="prev-next">
+      <div class="pager">
+        {prev ? (
+          <AutoLink className="pager-link prev" href={prev.link}>
+            <span class="desc">上一页</span>
+            <span class="title">{prev.text}</span>
+          </AutoLink>
+        ) : null}
+      </div>
+      <div class:list={['pager', { 'has-prev': prev }]}>
+        {next ? (
+          <AutoLink className="pager-link next" href={next.link}>
+            <span class="desc">下一页</span>
+            <span class="title">{next.text}</span>
+          </AutoLink>
+        ) : null}
+      </div>
+    </div>
+  ) : null
+}
+
+<style>
+  .prev-next {
+    margin-top: 64px;
+    border-top: 1px solid var(--c-divider);
+    padding-top: 24px;
+  }
+
+  @media (min-width: 640px) {
+    .prev-next {
+      display: flex;
+    }
+  }
+
+  .pager.has-prev {
+    padding-top: 8px;
+  }
+
+  @media (min-width: 640px) {
+    .pager {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      width: 50%;
+    }
+
+    .pager.has-prev {
+      padding-top: 0;
+      padding-left: 16px;
+    }
+  }
+
+  .pager-link {
+    display: block;
+    border: 1px solid var(--c-divider);
+    border-radius: 8px;
+    padding: 11px 16px 13px;
+    width: 100%;
+    height: 100%;
+    transition: border-color 0.25s;
+  }
+
+  .pager-link:hover {
+    border-color: var(--c-brand);
+  }
+
+  .pager-link.next {
+    margin-left: auto;
+    text-align: right;
+  }
+
+  .desc {
+    display: block;
+    line-height: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--c-text-2);
+  }
+
+  .title {
+    display: block;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--c-brand);
+    transition: color 0.25s;
+  }
+</style>

@@ -1,0 +1,20 @@
+---
+import { toArray } from '@pengzhanbo/utils'
+import Breadcrumb from '~/components/Breadcrumb.astro'
+import Layout from '~/layouts/Layout.astro'
+import { getPoetriesConfig } from '~/supports'
+
+const poetry = getPoetriesConfig('di-zi-gui')!
+
+const { title, description } = poetry
+const descriptions = toArray(description)
+---
+
+<Layout title={title} navFixed>
+  <div class="py-6 px-5 md:px-10">
+    <Breadcrumb list={[{ text: title, active: true }]} />
+    <div class="py-6">
+      {descriptions.map((desc) => <p class="px-4">{desc}</p>)}
+    </div>
+  </div>
+</Layout>

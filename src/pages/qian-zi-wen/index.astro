@@ -1,0 +1,59 @@
+---
+import { toArray } from '@pengzhanbo/utils'
+import Breadcrumb from '~/components/Breadcrumb.astro'
+
+// import PostContent from '~/components/PostContent.astro'
+import data from '~/database/qianziwen.json'
+import Layout from '~/layouts/Layout.astro'
+import { getPoetriesConfig } from '~/supports'
+
+const poetry = getPoetriesConfig('qian-zi-wen')!
+
+const { title, description } = poetry
+const descriptions = toArray(description)
+
+const worlds: [string, string][][] = [] // [spell, world][][]
+
+data.paragraphs.forEach((paragraph, index) => {
+  const spell = data.spells[index].split(' ')
+  const world = paragraph
+    .split('')
+    .map((w, i) => [spell[i], w] as [string, string])
+  worlds.push(world)
+})
+---
+
+<Layout title={title} navFixed>
+  <div class="py-6 px-5 md:px-10">
+    <Breadcrumb list={[{ text: title, active: true }]} />
+    <div class="py-6 max-w-3xl mx-auto border-b border-b-border">
+      {descriptions.map((desc) => <p class="px-4">{desc}</p>)}
+    </div>
+    <div class="pt-6 text-center max-w-4xl mx-auto">
+      <h3 class="text-2xl font-bold text-brand mt-10 mb-4">
+        {data.title}
+      </h3>
+      <p class="flex justify-center items-center text-text-2 pb-6">
+        <span class="mr-4">[{data.author}]</span>
+        <span>[{data.tags}]</span>
+      </p>
+      <!-- <PostContent content={data.paragraphs} split flex /> -->
+      <div
+        class="post-content font-medium flex flex-wrap items-center justify-center -mx-4"
+      >
+        {
+          worlds.map((world) => (
+            <div class="mt-0 mb-4 tracking-wider leading-8 mx-4 flex items-center">
+              {world.map(([spell, letter]) => (
+                <div class="w-[3em] text-center">
+                  <p class="my-0 text-text-2 font-normal">{spell}</p>
+                  <p class="my-0">{letter}</p>
+                </div>
+              ))}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</Layout>

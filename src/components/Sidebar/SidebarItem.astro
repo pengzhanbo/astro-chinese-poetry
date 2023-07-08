@@ -1,0 +1,233 @@
+---
+import type { HTMLTag } from 'astro/types'
+import AutoLink from '~/components/AutoLink.astro'
+import IconChevronRight from '~/components/icons/IconChevronRight.astro'
+import type { SidebarItem } from '~/types'
+import { isActive } from '~/utils'
+
+export interface Props {
+  item: SidebarItem
+  depth?: number
+}
+
+function containsActiveLink(
+  path: string,
+  items: SidebarItem | SidebarItem[],
+): boolean {
+  if (Array.isArray(items)) {
+    return items.some((item) => containsActiveLink(path, item))
+  }
+
+  return isActive(path, items.link)
+    ? true
+    : items.items
+    ? containsActiveLink(path, items.items)
+    : false
+}
+
+const { item, depth = 0 } = Astro.props
+
+const hasChildren = item.items && item.items.length > 0
+const isLink = !!item.link
+const itemRole = isLink ? undefined : 'button'
+const isActiveLink = isActive(Astro.url.pathname, item.link)
+const hasActiveLink = isActiveLink
+  ? true
+  : item.items
+  ? containsActiveLink(Astro.url.pathname, item)
+  : false
+const collapsible = item.collapsed != null
+const collapsed = collapsible ? item.collapsed : false
+
+const SectionTag = (hasChildren ? 'section' : 'div') as unknown as HTMLTag
+const TextTag = (!hasChildren
+  ? 'p'
+  : depth + 2 === 7
+  ? 'p'
+  : `h${depth + 2}`) as unknown as HTMLTag
+---
+
+<SectionTag
+  class:list={[
+    'sidebar-item',
+    `level-${depth}`,
+    {
+      'is-active': isActiveLink,
+      'is-link': isLink,
+      'has-active': hasActiveLink,
+      'collapsible': collapsible,
+      'collapsed': collapsed,
+      'has-items': item.items && item.items.length,
+    },
+  ]}
+  data-collasible={collapsible}
+>
+  <div class="item" role={itemRole}>
+    <div class="indicator"></div>
+    <AutoLink href={item.link} className="link">
+      <TextTag class="text">{item.text}</TextTag>
+    </AutoLink>
+    {
+      item.collapsed != null ? (
+        <div class="caret" role="button">
+          <span class="icon caret-icon">
+            <IconChevronRight />
+          </span>
+        </div>
+      ) : null
+    }
+  </div>
+  {
+    item.items && item.items.length ? (
+      <div class="items">
+        {depth < 5
+          ? item.items.map((item) => (
+              <Astro.self item={item} depth={depth + 1} />
+            ))
+          : null}
+      </div>
+    ) : null
+  }
+</SectionTag>
+
+<script src="./SidebarItem.ts"></script>
+
+<style>
+  .sidebar-item.has-items.level-0 {
+    padding-bottom: 24px;
+  }
+
+  .sidebar-item.level-0,
+  .sidebar-item.collapsed.level-0 {
+    padding-bottom: 10px;
+  }
+
+  .item {
+    position: relative;
+    display: flex;
+    width: 100%;
+  }
+
+  .item p {
+    margin: 0;
+  }
+
+  .sidebar-item.collapsible > .item {
+    cursor: pointer;
+  }
+
+  .indicator {
+    position: absolute;
+    top: 6px;
+    bottom: 6px;
+    left: -17px;
+    width: 1px;
+    transition: background-color 0.25s;
+  }
+
+  .sidebar-item.level-2.is-active > .item > .indicator,
+  .sidebar-item.level-3.is-active > .item > .indicator,
+  .sidebar-item.level-4.is-active > .item > .indicator,
+  .sidebar-item.level-5.is-active > .item > .indicator {
+    background-color: var(--c-brand);
+  }
+
+  .link {
+    display: block;
+    flex-grow: 1;
+  }
+
+  .text {
+    flex-grow: 1;
+    padding: 4px 0;
+    line-height: 24px;
+    font-size: 14px;
+    transition: color 0.25s;
+  }
+
+  .sidebar-item.level-0 .text {
+    font-weight: 700;
+    color: var(--c-text-1);
+  }
+
+  .sidebar-item.level-1 .text,
+  .sidebar-item.level-2 .text,
+  .sidebar-item.level-3 .text,
+  .sidebar-item.level-4 .text,
+  .sidebar-item.level-5 .text {
+    font-weight: 500;
+    color: var(--c-text-2);
+  }
+
+  .sidebar-item.level-0.is-link > .item > .link:hover .text,
+  .sidebar-item.level-1.is-link > .item > .link:hover .text,
+  .sidebar-item.level-2.is-link > .item > .link:hover .text,
+  .sidebar-item.level-3.is-link > .item > .link:hover .text,
+  .sidebar-item.level-4.is-link > .item > .link:hover .text,
+  .sidebar-item.level-5.is-link > .item > .link:hover .text {
+    color: var(--c-brand-light-2);
+  }
+
+  .sidebar-item.level-0.has-active > .item > .link > .text,
+  .sidebar-item.level-1.has-active > .item > .link > .text,
+  .sidebar-item.level-2.has-active > .item > .link > .text,
+  .sidebar-item.level-3.has-active > .item > .link > .text,
+  .sidebar-item.level-4.has-active > .item > .link > .text,
+  .sidebar-item.level-5.has-active > .item > .link > .text {
+    color: var(--c-text-1);
+  }
+
+  .sidebar-item.level-0.is-active > .item .link > .text,
+  .sidebar-item.level-1.is-active > .item .link > .text,
+  .sidebar-item.level-2.is-active > .item .link > .text,
+  .sidebar-item.level-3.is-active > .item .link > .text,
+  .sidebar-item.level-4.is-active > .item .link > .text,
+  .sidebar-item.level-5.is-active > .item .link > .text {
+    color: var(--c-brand);
+  }
+
+  .caret {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: -7px;
+    width: 32px;
+    height: 32px;
+    color: var(--c-text-3);
+    cursor: pointer;
+    transition: color 0.25s;
+  }
+
+  .item:hover .caret {
+    color: var(--c-text-2);
+  }
+
+  .item:hover .caret:hover {
+    color: var(--c-text-1);
+  }
+
+  .caret-icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    transform: rotate(90deg);
+    transition: transform 0.25s;
+  }
+
+  .sidebar-item.collapsed .caret-icon {
+    transform: rotate(0);
+  }
+
+  .sidebar-item.level-1 .items,
+  .sidebar-item.level-2 .items,
+  .sidebar-item.level-3 .items,
+  .sidebar-item.level-4 .items,
+  .sidebar-item.level-5 .items {
+    border-left: 1px solid var(--c-divider);
+    padding-left: 16px;
+  }
+
+  .sidebar-item.collapsed .items {
+    display: none;
+  }
+</style>

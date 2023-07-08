@@ -1,0 +1,45 @@
+---
+import { isArray } from '@pengzhanbo/utils'
+import { normalizeStr } from '~/utils'
+
+export interface Props {
+  content: string[]
+  center?: boolean
+  flex?: boolean
+  indent?: boolean
+  split?: boolean
+}
+
+const { content, flex, center, indent, split } = Astro.props
+
+const paragraphs = !split ? content : content.map(normalizeStr)
+---
+
+<div
+  class:list={[
+    'post-content font-medium',
+    {
+      'text-center': center,
+      'flex flex-wrap items-center justify-center -mx-4': flex,
+    },
+  ]}
+>
+  {
+    paragraphs.map((paragraph) => (
+      <p
+        class:list={[
+          'mt-0 mb-3 tracking-wider leading-8',
+          { 'mx-4': flex, 'indent-8': indent },
+        ]}
+      >
+        {!isArray(paragraph)
+          ? paragraph
+          : paragraph.map((par) => (
+              <span class:list={[{ 'mr-4 last-of-type:mr-0': flex }]}>
+                {par}
+              </span>
+            ))}
+      </p>
+    ))
+  }
+</div>

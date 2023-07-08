@@ -1,16 +1,13 @@
-# Astro Starter Kit: Basics
+# astro-chinese-poetry
 
-```
-npm create astro@latest -- --template basics
-```
+中国古典文学
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## 说明
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+本仓库基于 `Astro` 构建一个纯静态的 中国古典文学 网站，旨在学习中国古典文学。
 
-![basics](https://user-images.githubusercontent.com/4677417/186188965-73453154-fdec-4d6b-9c34-cb35c248ae5b.png)
+数据来源： [chinese-poetry](https://github.com/chinese-poetry/chinese-poetry)
+
 
 ## 🚀 Project Structure
 

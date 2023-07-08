@@ -1,0 +1,93 @@
+/* Colors Base */
+:root {
+  --c-white: #fff;
+  --c-black: #000;
+  --c-gray: #8e8e93;
+
+  --c-text-light-1: rgba(60, 60, 67, 0.92);
+  --c-text-light-2: rgba(60, 60, 67, 0.7);
+  --c-text-light-3: rgba(60, 60, 67, 0.33);
+
+  --c-text-dark-1: rgba(255, 255, 245, 0.86);
+  --c-text-dark-2: rgba(235, 235, 245, 0.6);
+  --c-text-dark-3: rgba(235, 235, 245, 0.38);
+}
+
+/* Colors Theme */
+:root {
+
+  --c-bg: #fff;
+
+  --c-border: rgba(60, 60, 67, 0.29);
+  --c-divider: rgba(60, 60, 67, 0.12);
+  --c-gutter: rgba(60, 60, 67, 0.12);
+
+  --c-text-1: var(--c-text-light-1);
+  --c-text-2: var(--c-text-light-2);
+  --c-text-3: var(--c-text-light-3);
+
+  --c-brand: #eb6101;
+  --c-brand-light-1: #ec6800;
+  --c-brand-light-2: #e17b34;
+
+  --c-bg-alt: #fbfbfc;
+}
+
+.dark {
+  --c-bg: #1e1e20;
+
+  --c-border: rgba(82, 82, 89, 0.68);
+  --c-divider: rgba(82, 82, 89, 0.32);
+  --c-gutter: #000;
+
+  --c-text-1: var(--c-text-dark-1);
+  --c-text-2: var(--c-text-dark-2);
+  --c-text-3: var(--c-text-dark-3);
+
+  --c-bg-alt: #161618;
+}
+
+/* Typography */
+:root {
+  --font-family-base: "Noto Sans TC", ui-sans-serif, system-ui,
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Helvetica, Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-family-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco,
+    Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+
+/**
+ * Layouts
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --layout-max-width: 1440px;
+}
+
+/* Navbar */
+:root {
+  --nav-height: 64px;
+  --nav-bg: var(--c-bg);
+}
+
+/**
+ * Component: Sidebar
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --sidebar-width: 272px;
+  --sidebar-bg-color: var(--c-bg-alt);
+}
+
+/**
+ * Shadows
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-2: 0 3px 12px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.07);
+  --shadow-3: 0 12px 32px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-4: 0 14px 44px rgba(0, 0, 0, 0.12), 0 3px 9px rgba(0, 0, 0, 0.12);
+  --shadow-5: 0 18px 56px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.16);
+}

@@ -1,0 +1,24 @@
+{
+  "cSpell.words": [
+    "astro",
+    "astrojs",
+    "fontsource",
+    "noto",
+    "preact",
+    "tailwindcss",
+    "unocss"
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "astro", // Enable .astro
+    "typescript", // Enable .ts
+    "typescriptreact" // Enable .tsx
+  ],
+  "prettier.documentSelectors": ["**/*.astro"],
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+  "scss.validate": false,
+  "typescript.tsdk": "node_modules/typescript/lib",
+}

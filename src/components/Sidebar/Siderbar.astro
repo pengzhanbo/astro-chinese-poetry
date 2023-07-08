@@ -1,0 +1,122 @@
+---
+import SidebarItem from './SidebarItem.astro'
+import { getSidebar } from '~/supports/sidebar'
+
+const sidebar = getSidebar(Astro.url.pathname)
+
+sidebar &&
+  sidebar.forEach((item) => {
+    if (item.collapsed != null) {
+      item.collapsed = !item.items?.some(
+        (it) => decodeURIComponent(Astro.url.pathname) === it.link,
+      )
+    }
+  })
+---
+
+{
+  sidebar ? (
+    <div class="sidebar-wrapper">
+      <div class="curtain" />
+      <nav class="nav" aria-labelledby="sidebar-aria-label" tabindex="-1">
+        <span id="sidebar-aria-label" class="visually-hidden">
+          Sidebar Navigation
+        </span>
+        {sidebar.map((item) => (
+          <div class="group">
+            <SidebarItem item={item} depth={0} />
+          </div>
+        ))}
+      </nav>
+    </div>
+  ) : null
+}
+
+<style>
+  .sidebar-wrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 50;
+    padding: 32px 32px 96px;
+    width: calc(100vw - 64px);
+    max-width: 320px;
+    background-color: var(--sidebar-bg-color);
+    opacity: 0;
+    box-shadow: var(--c-shadow-3);
+    overflow-x: hidden;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: opacity 0.5s, transform 0.25s ease;
+  }
+
+  .sidebar-wrapper.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    transition: opacity 0.25s, transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .dark .sidebar-wrapper {
+    box-shadow: var(--shadow-1);
+  }
+
+  @media (min-width: 960px) {
+    .sidebar-wrapper {
+      z-index: 1;
+      padding-top: var(--nav-height);
+      padding-bottom: 128px;
+      width: var(--sidebar-width);
+      max-width: 100%;
+      background-color: var(--sidebar-bg-color);
+      opacity: 1;
+      visibility: visible;
+      box-shadow: none;
+      transform: translateX(0);
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .sidebar-wrapper {
+      padding-left: max(
+        32px,
+        calc((100% - (var(--layout-max-width) - 64px)) / 2)
+      );
+      width: calc(
+        (100% - (var(--layout-max-width) - 64px)) / 2 + var(--sidebar-width) -
+          32px
+      );
+    }
+  }
+
+  @media (min-width: 960px) {
+    .curtain {
+      position: sticky;
+      top: -64px;
+      left: 0;
+      z-index: 1;
+      margin-top: calc(var(--nav-height) * -1);
+      margin-right: -32px;
+      margin-left: -32px;
+      height: var(--nav-height);
+      background-color: var(--sidebar-bg-color);
+    }
+  }
+
+  .nav {
+    outline: 0;
+  }
+
+  .group + .group {
+    border-top: 1px solid var(--c-divider);
+    padding-top: 10px;
+  }
+
+  @media (min-width: 960px) {
+    .group {
+      padding-top: 10px;
+      width: calc(var(--sidebar-width) - 64px);
+    }
+  }
+</style>

@@ -1,0 +1,47 @@
+---
+import AutoLink from './AutoLink.astro'
+---
+
+<footer class="footer-wrapper">
+  <div class="content">
+    <p class="message">
+      <span>数据来源：</span><AutoLink
+        className="text-blue-500 hover:!text-blue-700"
+        href="https://github.com/chinese-poetry/chinese-poetry"
+      >
+        chinese-poetry
+      </AutoLink>
+    </p>
+    <p class="copyright">Copyright © 2023-present pengzhanbo</p>
+  </div>
+</footer>
+
+<style>
+  .footer-wrapper {
+    position: relative;
+    z-index: 20;
+    border-top: 1px solid var(--c-gutter);
+    padding: 32px 24px;
+    background-color: var(--c-bg);
+  }
+  @media (min-width: 768px) {
+    .footer-wrapper {
+      padding: 32px;
+    }
+  }
+
+  .content {
+    margin: 0 auto;
+    max-width: var(--layout-max-width);
+    text-align: center;
+  }
+
+  .message,
+  .copyright {
+    margin: 0;
+    line-height: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--c-text-2);
+  }
+</style>

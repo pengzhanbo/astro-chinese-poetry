@@ -1,0 +1,53 @@
+---
+import Breadcrumb from '~/components/Breadcrumb.astro'
+import PostContent from '~/components/PostContent.astro'
+import PrevNext from '~/components/PrevNext.astro'
+import datas from '~/database/shijing.json'
+import Layout from '~/layouts/Layout.astro'
+import { getPoetriesConfig, pervNext } from '~/supports'
+import type { ShiJingItem } from '~/types'
+import { slugify } from '~/utils'
+
+export interface Props {
+  post: ShiJingItem
+  index: number
+}
+
+export function getStaticPaths() {
+  return datas.map((post: ShiJingItem, index) => ({
+    params: { title: slugify(post.chapter, post.section, post.title) },
+    props: { post, index },
+  }))
+}
+
+const poetry = getPoetriesConfig('shi-jing')!
+
+const { title, id } = poetry
+const { content, chapter, title: postTitle, section } = Astro.props.post
+
+const { prev, next } = pervNext(
+  getStaticPaths(),
+  Astro.props.index,
+  ({ params, props }) => ({
+    text: `${props.post.chapter} · ${props.post.section} · ${props.post.title}`,
+    link: `/${id}/${params.title}`,
+  }),
+)
+---
+
+<Layout title={title} navFixed>
+  <div class="py-6 px-5 md:px-10 pb-20">
+    <Breadcrumb list={[{ text: title, active: true, link: `/${id}` }]} />
+    <div class="pb-4 text-center">
+      <h3 class="text-2xl font-bold text-brand mt-10 mb-6">
+        {postTitle}
+      </h3>
+      <p class="flex justify-center items-center text-text-2">
+        <span class="mr-4">[{chapter}]</span>
+        <span>[{section}]</span>
+      </p>
+      <PostContent content={content} />
+    </div>
+    <PrevNext {prev} {next} />
+  </div>
+</Layout>

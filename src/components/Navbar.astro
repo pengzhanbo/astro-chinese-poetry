@@ -1,0 +1,56 @@
+---
+import AutoLink from './AutoLink.astro'
+import { siteTitle } from '~/config/site'
+
+export interface Props {
+  fixed: boolean
+}
+
+const { fixed } = Astro.props
+---
+
+<div
+  class:list={[
+    'navbar-wrapper',
+    'top-0 left-0 z-10 w-full h-[var(--nav-height)] pointer-events-none transition-colors',
+    fixed ? 'fixed' : 'relative',
+  ]}
+>
+  <div
+    class:list={[
+      'navbar-container',
+      'relative',
+      'h-nav pr-1 pointer-events-none',
+    ]}
+  >
+    <div
+      class:list={[
+        'navbar-container',
+        'pointer-events-none mx-auto h-nav flex justify-between',
+      ]}
+    >
+      <div
+        class="navbar-title w-[calc(var(--sidebar-width)-64px)] mx-8 h-[var(--nav-height)] flex-shrink-0"
+      >
+        <AutoLink
+          className="h-nav w-full flex items-center font-bold text-brand opacity-100 transition-opacity hover:opacity-60 b-b"
+          href="/"
+          text={siteTitle}
+        />
+      </div>
+      <div
+        class:list={[
+          'content flex-1 h-[var(--nav-height)]',
+          { 'bg-[var(--nav-bg)]': fixed },
+        ]}
+      >
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .navbar-container :global(*) {
+    pointer-events: auto;
+  }
+</style>

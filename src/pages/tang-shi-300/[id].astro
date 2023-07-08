@@ -1,0 +1,54 @@
+---
+import Breadcrumb from '~/components/Breadcrumb.astro'
+import PostContent from '~/components/PostContent.astro'
+import PrevNext from '~/components/PrevNext.astro'
+import Tags from '~/components/Tags.astro'
+import datas from '~/database/tang-shi-300.json'
+import Layout from '~/layouts/Layout.astro'
+import { getPoetriesConfig, pervNext } from '~/supports'
+import type { TangShi300Item } from '~/types'
+
+export interface Props {
+  post: TangShi300Item
+  index: number
+}
+
+export const getStaticPaths = () => {
+  return datas.map((post: TangShi300Item, index) => {
+    return {
+      params: { id: post.id },
+      props: { post, index },
+    }
+  })
+}
+
+const { title, author, paragraphs, tags } = Astro.props.post
+
+const poetry = getPoetriesConfig('tang-shi-300')!
+
+const { title: pageTitle, id } = poetry
+
+const { prev, next } = pervNext(
+  getStaticPaths(),
+  Astro.props.index,
+  ({ params, props }) => ({
+    text: props.post.title,
+    link: `/${id}/${params.id}`,
+  }),
+)
+---
+
+<Layout title={title} navFixed>
+  <div class="py-6 px-5 md:px-10 pb-20">
+    <Breadcrumb list={[{ text: pageTitle, active: true, link: `/${id}` }]} />
+    <div class="content pt-6 text-center">
+      <h3 class="mb-4 text-2xl font-bold tracking-widest text-brand">
+        {title}
+      </h3>
+      <p class="mb-4">{author}</p>
+      <Tags tags={tags} className="mb-6" />
+      <PostContent content={paragraphs} />
+    </div>
+    <PrevNext {prev} {next} />
+  </div>
+</Layout>

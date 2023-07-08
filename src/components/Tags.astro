@@ -1,0 +1,24 @@
+---
+import { toArray } from '@pengzhanbo/utils'
+import type { ClassName } from '~/types'
+
+export interface Props {
+  tags: string[]
+  className?: ClassName
+}
+
+const { className } = Astro.props
+const tags = toArray(Astro.props.tags)
+---
+
+<div
+  class:list={['flex flex-wrap items-center justify-center -mx-1', className]}
+>
+  {
+    tags.map((tag) => (
+      <span class="b-f mx-1 mb-2 inline-block rounded-sm bg-gray-50 px-1 text-sm text-text-1">
+        {tag}
+      </span>
+    ))
+  }
+</div>

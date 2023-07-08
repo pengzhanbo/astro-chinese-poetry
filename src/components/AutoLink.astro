@@ -1,0 +1,49 @@
+---
+import IconExternal from './icons/IconExternal.astro'
+import type { ClassName } from '~/types'
+import { isExternal as _isExternal, normalizeLink } from '~/utils'
+
+export interface Props {
+  href?: string
+  text?: string
+  target?: string
+  rel?: string
+  noIcon?: boolean
+  className?: ClassName
+}
+
+const props = Astro.props
+const { text, href: _href, noIcon } = props
+
+const isLink = !!_href
+const isExternal = _href && _isExternal(_href)
+
+const target = props.target || (isExternal ? '_blank' : undefined)
+const rel = props.rel || (isExternal ? 'noreferrer' : undefined)
+
+const href = isLink ? normalizeLink(_href) : undefined
+
+const className = ['auto-link', props.className]
+---
+
+{
+  isLink ? (
+    <a
+      class:list={[...className, 'hover:text-brand transition-colors']}
+      {href}
+      {target}
+      {rel}
+    >
+      <slot>{text || href}</slot>
+      {isExternal && !noIcon ? (
+        <span class="icon ml-1 -mt-[1px] text-text-3">
+          <IconExternal />
+        </span>
+      ) : null}
+    </a>
+  ) : (
+    <span class:list={className}>
+      <slot>{text || href}</slot>
+    </span>
+  )
+}

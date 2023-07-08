@@ -1,0 +1,65 @@
+---
+import Breadcrumb from '~/components/Breadcrumb.astro'
+import PostContent from '~/components/PostContent.astro'
+import PrevNext from '~/components/PrevNext.astro'
+import datas from '~/database/youxueqionglin.json'
+import Layout from '~/layouts/Layout.astro'
+import { getPoetriesConfig, pervNext } from '~/supports'
+import type { ChapterItem } from '~/types'
+import { slugifyParams } from '~/utils'
+
+export interface Props {
+  post: ChapterItem
+  index: number
+  chapter: string
+}
+
+interface RouteItem {
+  params: { title: string; chapter: string }
+  props: Props
+}
+
+export function getStaticPaths() {
+  const res: RouteItem[] = []
+  let index = 0
+  for (let i = 0; i < datas.content.length; i++) {
+    const { title, content } = datas.content[i]
+    for (let j = 0; j < content.length; j++) {
+      const post = content[j]
+      res.push({
+        params: slugifyParams({ title, chapter: post.chapter }),
+        props: { post, index, chapter: title },
+      })
+      index++
+    }
+  }
+  return res
+}
+
+const poetry = getPoetriesConfig('you-xue-qiong-lin')!
+
+const { title, id } = poetry
+const { paragraphs, chapter } = Astro.props.post
+
+const { prev, next } = pervNext(
+  getStaticPaths(),
+  Astro.props.index,
+  ({ params, props }) => ({
+    text: `${props.chapter} · ${props.post.chapter}`,
+    link: `/${id}/${params.title}-${params.chapter}`,
+  }),
+)
+---
+
+<Layout title={title} navFixed>
+  <div class="py-6 px-5 md:px-10 pb-20">
+    <Breadcrumb list={[{ text: title, active: true, link: `/${id}` }]} />
+    <div class="pb-4">
+      <h3 class="text-2xl font-bold text-brand mt-10 mb-6">
+        {chapter}
+      </h3>
+      <PostContent content={paragraphs} indent />
+    </div>
+    <PrevNext {prev} {next} />
+  </div>
+</Layout>

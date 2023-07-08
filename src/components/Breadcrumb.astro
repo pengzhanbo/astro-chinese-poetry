@@ -1,0 +1,46 @@
+---
+import AutoLink from './AutoLink.astro'
+import IconArrowRight from './icons/IconArrowRight.astro'
+import { siteTitle } from '~/config/site'
+
+interface BreadcrumbItem {
+  link?: string
+  text?: string
+  active?: boolean
+}
+export interface Props {
+  list: BreadcrumbItem[]
+}
+
+const list: BreadcrumbItem[] = [
+  {
+    text: siteTitle,
+  },
+  ...Astro.props.list,
+]
+---
+
+<div class="breadcrumb-wrapper mb-4 pl-4 relative">
+  <div
+    class="absolute left-0 top-[calc(50%+2px)] -translate-y-1/2 w-1 h-[1em] bg-brand rounded-r-sm"
+  >
+  </div>
+  <ul class="flex items-center py-0">
+    {
+      list.map((item, i) => (
+        <li class="flex items-center">
+          <AutoLink
+            className={{ 'text-brand font-bold': item.active }}
+            href={item.link}
+            text={item.text}
+          />
+          {i !== list.length - 1 ? (
+            <span class="icon mx-2 text-text-3">
+              <IconArrowRight />
+            </span>
+          ) : null}
+        </li>
+      ))
+    }
+  </ul>
+</div>
