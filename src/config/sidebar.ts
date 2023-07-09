@@ -5,6 +5,7 @@ import guWenGuanZhi from '~/database/guwenguanzhi.json'
 import lunYu from '~/database/lunyu.json'
 import mengZi from '~/database/mengzi.json'
 import qianJiaShi from '~/database/qianjiashi.json'
+import shangShu from '~/database/shangshu.json'
 import shengLvQiMeng from '~/database/shenglvqimeng.json'
 import shiJing from '~/database/shijing.json'
 import tangShi300 from '~/database/tang-shi-300.json'
@@ -35,6 +36,13 @@ export const sidebarConfig: Record<string, SidebarOptions> = {
   '/meng-zi': mengZi.map(({ chapter }) => ({
     text: chapter,
     link: `/meng-zi/${slugify(chapter)}`,
+  })),
+  '/shang-shu': shangShu.content.map(({ title, content }) => ({
+    text: title,
+    items: content.map(({ chapter }) => ({
+      text: chapter,
+      link: `/shang-shu/${slugify(title, chapter)}`,
+    })),
   })),
   '/san-zi-jing': [
     { text: '新版', link: '/san-zi-jing/new' },

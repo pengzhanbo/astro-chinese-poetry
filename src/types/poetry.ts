@@ -160,3 +160,13 @@ export interface ZhongYong extends ChapterItem {}
 
 // 孟子
 export type MengZi = ChapterItem[]
+
+// 尚书
+export interface ShangShu {
+  title: string
+  abstract: string
+  content: {
+    title: string
+    content: ChapterItem[]
+  }[]
+}

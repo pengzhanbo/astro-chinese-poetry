@@ -4,11 +4,15 @@ import { getSidebar } from '~/supports/sidebar'
 
 const sidebar = getSidebar(Astro.url.pathname)
 
+const RE_PATH = /^\/|\/$/g
+const normalize = (url: string) => {
+  return decodeURIComponent(`/${url.replace(RE_PATH, '')}/`)
+}
 sidebar &&
   sidebar.forEach((item) => {
     if (item.collapsed != null) {
       item.collapsed = !item.items?.some(
-        (it) => decodeURIComponent(Astro.url.pathname) === it.link,
+        (it) => it.link && normalize(Astro.url.pathname) === normalize(it.link),
       )
     }
   })

@@ -29,7 +29,7 @@ export function isActive(
     return false
   }
 
-  currentPath = normalize(`/${decodeURI(currentPath).replace(/^\//, '')}`)
+  currentPath = normalize(`/${decodeURI(currentPath).replace(/^\/|\/$/g, '')}`)
 
   if (asRegex) {
     return new RegExp(matchPath).test(currentPath)
