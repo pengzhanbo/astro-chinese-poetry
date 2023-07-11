@@ -164,9 +164,16 @@ export type MengZi = ChapterItem[]
 // 尚书
 export interface ShangShu {
   title: string
-  abstract: string
+  abstract: string[]
   content: {
     title: string
     content: ChapterItem[]
   }[]
+}
+
+// 春秋
+export interface ChunQiu {
+  title: string
+  abstract: string[]
+  content: ChapterItem[]
 }

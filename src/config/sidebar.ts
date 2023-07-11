@@ -1,5 +1,6 @@
 import { chunk } from '@pengzhanbo/utils'
 import chuCi from '~/database/chuci.json'
+import chunQiu from '~/database/chunqiu.json'
 import diZiGui from '~/database/dizigui.json'
 import guWenGuanZhi from '~/database/guwenguanzhi.json'
 import lunYu from '~/database/lunyu.json'
@@ -43,6 +44,10 @@ export const sidebarConfig: Record<string, SidebarOptions> = {
       text: chapter,
       link: `/shang-shu/${slugify(title, chapter)}`,
     })),
+  })),
+  '/chun-qiu': chunQiu.content.map(({ chapter }) => ({
+    text: chapter,
+    link: `/chun-qiu/${slugify(chapter)}`,
   })),
   '/san-zi-jing': [
     { text: '新版', link: '/san-zi-jing/new' },
