@@ -7,7 +7,7 @@
         "src/*"
       ]
     },
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    // "jsx": "react-jsx",
+    // "jsxImportSource": "preact"
   }
 }
