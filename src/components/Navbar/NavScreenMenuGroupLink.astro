@@ -1,0 +1,33 @@
+---
+import AutoLink from '../AutoLink.astro'
+import type { NavItemWithLink } from '~/types'
+
+export interface Props {
+  item: NavItemWithLink
+}
+const { text, target, link, rel } = Astro.props.item
+---
+
+<AutoLink
+  class="nav-screen-menu-group-link nav-screen-link-item"
+  {text}
+  {target}
+  {rel}
+  href={link}
+/>
+
+<style>
+  .nav-screen-menu-group-link {
+    display: block;
+    margin-left: 12px;
+    line-height: 32px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--c-text-1);
+    transition: color 0.25s;
+  }
+
+  .nav-screen-menu-group-link:hover {
+    color: var(--c-brand);
+  }
+</style>

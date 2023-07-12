@@ -3,17 +3,17 @@ import '@fontsource/noto-sans-tc/chinese-traditional.css'
 import '~/styles/index.scss'
 
 import LayoutContent from '~/components/LayoutContent.astro'
-import Navbar from '~/components/Navbar.astro'
+import LocalNav from '~/components/LocalNav.astro'
+import Navbar from '~/components/Navbar/index.astro'
 import PageFooter from '~/components/PageFooter.astro'
 import Siderbar from '~/components/Sidebar/Siderbar.astro'
 import { siteTitle } from '~/config/site'
 
 export interface Props {
   title?: string
-  navFixed?: boolean
 }
 
-const { title, navFixed } = Astro.props
+const { title } = Astro.props
 const pageTitle = title ? `${title} | ${siteTitle}` : siteTitle
 ---
 
@@ -23,13 +23,26 @@ const pageTitle = title ? `${title} | ${siteTitle}` : siteTitle
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/logo.png" />
     <meta name="generator" content={Astro.generator} />
+    <script is:inline>
+      // eslint-disable-next-line @typescript-eslint/no-extra-semi, prettier/prettier
+      ;(function () {
+        const userMode = localStorage.getItem('poetry-appearance')
+        const systemDarkMode =
+          window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (userMode === 'dark' || (userMode !== 'light' && systemDarkMode)) {
+          document.documentElement.classList.add('dark')
+        }
+      })()
+    </script>
     <title>{pageTitle}</title>
   </head>
   <body>
     <div class="min-h-full w-full">
-      <Navbar fixed={!!navFixed} />
+      <Navbar />
+      <LocalNav />
       <Siderbar />
       <LayoutContent>
         <slot />
@@ -38,16 +51,3 @@ const pageTitle = title ? `${title} | ${siteTitle}` : siteTitle
     </div>
   </body>
 </html>
-
-<script>
-  // eslint-disable-next-line @typescript-eslint/no-extra-semi, prettier/prettier
-  ;(function () {
-    const userMode = localStorage.getItem('poetry-appearance')
-    const systemDarkMode =
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-    if (userMode === 'dark' || (userMode !== 'light' && systemDarkMode)) {
-      document.documentElement.classList.add('dark')
-    }
-  })()
-</script>

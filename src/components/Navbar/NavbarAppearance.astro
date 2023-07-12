@@ -1,0 +1,25 @@
+---
+import SwitchAppearance from './SwitchAppearance.astro'
+import type { BaseProps } from '~/types'
+
+export interface Props extends BaseProps {}
+
+const className = Astro.props['class:list'] || Astro.props.class
+---
+
+<div class:list={['navbar-appearance-wrapper', className]}>
+  <SwitchAppearance />
+</div>
+
+<style>
+  .navbar-appearance-wrapper {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .navbar-appearance-wrapper {
+      display: flex;
+      align-items: center;
+    }
+  }
+</style>

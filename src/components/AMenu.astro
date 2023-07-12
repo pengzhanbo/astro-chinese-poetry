@@ -1,0 +1,81 @@
+---
+import AMenuGroup from './AMenuGroup.astro'
+import AMenuLink from './AMenuLink.astro'
+import type { NavItem, NavItemWithLink } from '~/types'
+
+export interface Props {
+  items?: NavItem[]
+}
+
+const { items } = Astro.props
+---
+
+<div class="a-menu">
+  {
+    items && (
+      <div class="items">
+        {items.map((item) =>
+          'link' in item ? (
+            <AMenuLink item={item} />
+          ) : (
+            <AMenuGroup
+              text={item.text}
+              items={item.items as NavItemWithLink[]}
+            />
+          ),
+        )}
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .a-menu {
+    border-radius: 12px;
+    padding: 12px;
+    min-width: 128px;
+    border: 1px solid var(--c-divider);
+    background-color: var(--c-bg-elv);
+    box-shadow: var(--shadow-3);
+    transition: background-color 0.5s;
+    max-height: calc(100vh - var(--nav-height));
+    overflow-y: auto;
+  }
+
+  .a-menu :global(.group) {
+    margin: 0 -12px;
+    padding: 0 12px 12px;
+  }
+
+  .a-menu :global(.group + .group) {
+    border-top: 1px solid var(--c-divider);
+    padding: 11px 12px 12px;
+  }
+
+  .a-menu :global(.group:last-child) {
+    padding-bottom: 0;
+  }
+
+  .VPMenu :global(.group + .item) {
+    border-top: 1px solid var(--c-divider);
+    padding: 11px 16px 0;
+  }
+
+  .a-menu :global(.item) {
+    padding: 0 16px;
+    white-space: nowrap;
+  }
+
+  .a-menu :global(.label) {
+    flex-grow: 1;
+    line-height: 28px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--c-text-2);
+    transition: color 0.5s;
+  }
+
+  .a-menu :global(.action) {
+    padding-left: 24px;
+  }
+</style>

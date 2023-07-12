@@ -1,0 +1,95 @@
+---
+import IconMoon from '../icons/IconMoon.astro'
+import IconSun from '../icons/IconSun.astro'
+---
+
+<button
+  class="switch switch-appearance"
+  type="button"
+  role="switch"
+  title="toggle dark mode"
+  aria-checked="false"
+>
+  <p class="check">
+    <i class="switch-icon">
+      <span class="sun"><IconSun /></span>
+      <span class="moon"><IconMoon /></span>
+    </i>
+  </p>
+</button>
+
+<style>
+  .switch {
+    position: relative;
+    border-radius: 11px;
+    display: block;
+    width: 40px;
+    height: 22px;
+    flex-shrink: 0;
+    border: 1px solid var(--input-border-color);
+    background-color: var(--input-switch-bg-color);
+    transition: border-color 0.25s;
+  }
+
+  .switch:hover {
+    border-color: var(--input-hover-border-color);
+  }
+
+  .check {
+    position: absolute;
+    top: 1px;
+    /*rtl:ignore*/
+    left: 1px;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    border-radius: 50%;
+    background-color: var(--c-neutral-inverse);
+    box-shadow: var(--shadow-1);
+    transition: transform 0.25s;
+  }
+
+  .switch-icon {
+    position: relative;
+    display: block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .switch-icon :global(svg) {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 12px;
+    height: 12px;
+    fill: var(--c-text-2);
+  }
+
+  :global(.dark) .switch-icon :global(svg) {
+    fill: var(--c-text-1);
+    transition: opacity 0.25s;
+  }
+
+  .sun {
+    opacity: 1;
+  }
+
+  .moon {
+    opacity: 0;
+  }
+
+  :global(.dark) .sun {
+    opacity: 0;
+  }
+
+  :global(.dark) .moon {
+    opacity: 1;
+  }
+
+  :global(.dark) .switch-appearance :global(.check) {
+    /*rtl:ignore*/
+    transform: translateX(18px);
+  }
+</style>

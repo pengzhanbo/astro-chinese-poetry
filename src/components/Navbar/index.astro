@@ -1,0 +1,30 @@
+---
+import Navbar from './Navbar.astro'
+import NavScreen from './NavScreen.astro'
+---
+
+<header class="nav-wrapper">
+  <Navbar />
+  <NavScreen />
+</header>
+
+<script src="./navbar.ts"></script>
+
+<style>
+  .nav-wrapper {
+    position: relative;
+    top: 0;
+    /*rtl:ignore*/
+    left: 0;
+    z-index: 20;
+    width: 100%;
+    pointer-events: none;
+    transition: background-color 0.5s;
+  }
+
+  @media (min-width: 960px) {
+    .nav-wrapper {
+      position: fixed;
+    }
+  }
+</style>

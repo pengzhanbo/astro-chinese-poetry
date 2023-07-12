@@ -1,0 +1,32 @@
+---
+import SwitchAppearance from './SwitchAppearance.astro'
+import type { BaseProps } from '~/types'
+
+export interface Props extends BaseProps {}
+
+const className = Astro.props['class:list'] || Astro.props.class
+---
+
+<div class:list={['nav-screen-appearance', className]}>
+  <p class="text">Appearance</p>
+  <SwitchAppearance />
+</div>
+
+<style>
+  .nav-screen-appearance {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+    padding: 12px 14px 12px 16px;
+    background-color: var(--c-bg-soft);
+  }
+
+  .text {
+    line-height: 24px;
+    font-size: 12px;
+    font-weight: 500;
+    margin: 0;
+    color: var(--c-text-2);
+  }
+</style>

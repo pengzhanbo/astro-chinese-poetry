@@ -1,0 +1,49 @@
+---
+import Breadcrumb from '~/components/Breadcrumb.astro'
+import PostContent from '~/components/PostContent.astro'
+import PrevNext from '~/components/PrevNext.astro'
+import datas from '~/database/zhouyi.json'
+import Layout from '~/layouts/Layout.astro'
+import { getPoetriesConfig, pervNext } from '~/supports'
+import type { ChapterItem } from '~/types'
+import { slugify } from '~/utils'
+
+export interface Props {
+  post: ChapterItem
+  index: number
+}
+
+export function getStaticPaths() {
+  return datas.content.map((post: ChapterItem, index) => ({
+    params: { title: slugify(post.chapter) },
+    props: { post, index },
+  }))
+}
+
+const poetry = getPoetriesConfig('zhou-yi')!
+
+const { title, id } = poetry
+const { paragraphs, chapter } = Astro.props.post
+
+const { prev, next } = pervNext(
+  getStaticPaths(),
+  Astro.props.index,
+  ({ params, props }) => ({
+    text: props.post.chapter,
+    link: `/${id}/${params.title}`,
+  }),
+)
+---
+
+<Layout title={title}>
+  <div class="py-6 px-5 md:px-10 pb-20">
+    <Breadcrumb list={[{ text: title, active: true, link: `/${id}` }]} />
+    <div class="pb-4">
+      <h3 class="text-2xl font-bold text-brand mt-10 mb-6">
+        {chapter}
+      </h3>
+      <PostContent content={paragraphs} />
+    </div>
+    <PrevNext {prev} {next} />
+  </div>
+</Layout>

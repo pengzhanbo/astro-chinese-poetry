@@ -1,14 +1,13 @@
 ---
 import { toArray } from '@pengzhanbo/utils'
-import type { ClassName } from '~/types'
+import type { BaseProps } from '~/types'
 
-export interface Props {
+export interface Props extends BaseProps {
   tags: string[]
-  className?: ClassName
 }
 
-const { className } = Astro.props
 const tags = toArray(Astro.props.tags)
+const className = Astro.props['class:list'] || Astro.props.class
 ---
 
 <div

@@ -1,0 +1,125 @@
+---
+import AMenu from '../AMenu.astro'
+import IconChevronDown from '../icons/IconChevronDown.astro'
+import IconMoreHorizontal from '../icons/IconMoreHorizontal.astro'
+import type { BaseProps, NavItem } from '~/types'
+
+export interface Props extends BaseProps {
+  button?: string
+  label?: string
+  items?: NavItem[]
+}
+const { button, label, items } = Astro.props
+const className = Astro.props['class:list'] || Astro.props.class
+---
+
+<div class:list={['flyout-wrapper', className]}>
+  <button
+    type="button"
+    class="button"
+    aria-haspopup="true"
+    aria-expanded="false"
+    aria-label={label}
+  >
+    {
+      button ? (
+        <span class="text">
+          {button}
+          <i class="text-icon">
+            <IconChevronDown />
+          </i>
+        </span>
+      ) : (
+        <span class="icon">
+          <IconMoreHorizontal />
+        </span>
+      )
+    }
+  </button>
+  <div class="menu">
+    <AMenu items={items} />
+  </div>
+</div>
+
+<style>
+  .flyout-wrapper {
+    position: relative;
+  }
+
+  .flyout-wrapper:hover {
+    color: var(--c-brand);
+    transition: color 0.25s;
+  }
+
+  .flyout-wrapper:hover .text {
+    color: var(--c-text-2);
+  }
+
+  .flyout-wrapper:hover .icon {
+    fill: var(--c-text-2);
+  }
+
+  .flyout-wrapper.active .text {
+    color: var(--c-brand);
+  }
+
+  .flyout-wrapper.active:hover .text {
+    color: var(--c-brand-dark);
+  }
+
+  .flyout-wrapper:hover .menu,
+  .button[aria-expanded='true'] + .menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .button {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    height: var(--nav-height);
+    color: var(--c-text-1);
+    transition: color 0.5s;
+  }
+
+  .text {
+    display: flex;
+    align-items: center;
+    line-height: var(--nav-height);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--c-text-1);
+    transition: color 0.25s;
+  }
+
+  .option-icon {
+    margin-right: 0px;
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  .text-icon {
+    margin-left: 4px;
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transition: fill 0.25s;
+  }
+
+  .menu {
+    position: absolute;
+    top: calc(var(--nav-height) / 2 + 20px);
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s, visibility 0.25s, transform 0.25s;
+  }
+</style>

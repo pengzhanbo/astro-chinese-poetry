@@ -1,0 +1,71 @@
+---
+import NavScreenAppearance from './NavScreenAppearance.astro'
+import NavScreenMenu from './NavScreenMenu.astro'
+---
+
+<div class="nav-screen-wrapper" id="navScreen">
+  <div class="nav-screen-container">
+    <NavScreenMenu class="menu" />
+    <NavScreenAppearance class="appearance" />
+  </div>
+</div>
+
+<style>
+  .nav-screen-wrapper {
+    position: fixed;
+    top: calc(var(--nav-height) + 1px);
+    /*rtl:ignore*/
+    right: 0;
+    bottom: 0;
+    /*rtl:ignore*/
+    left: 0;
+    padding: 0 32px;
+    width: 100%;
+    background-color: var(--nav-screen-bg-color);
+    overflow-y: auto;
+    transition: background-color 0.5s;
+    pointer-events: auto;
+    transition: opacity 0.25s;
+    opacity: 0;
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .nav-screen-wrapper {
+      display: none;
+    }
+  }
+
+  .nav-screen-container {
+    margin: 0 auto;
+    padding: 24px 0 96px;
+    max-width: 288px;
+    transform: translateY(-8px);
+    transition: transform 0.25s ease;
+  }
+
+  .nav-screen-wrapper.show {
+    display: block;
+  }
+
+  .nav-screen-wrapper.animation {
+    opacity: 1;
+  }
+  .nav-screen-wrapper.animation .nav-screen-container {
+    transform: translateY(0);
+  }
+
+  .menu + .translations,
+  .menu + .appearance,
+  .translations + .appearance {
+    margin-top: 24px;
+  }
+
+  .menu + .social-links {
+    margin-top: 16px;
+  }
+
+  .appearance + .social-links {
+    margin-top: 16px;
+  }
+</style>

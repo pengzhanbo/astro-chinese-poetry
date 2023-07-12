@@ -177,3 +177,16 @@ export interface ChunQiu {
   abstract: string[]
   content: ChapterItem[]
 }
+
+// 礼记
+export interface LiJi {
+  title: string
+  abstract: string[]
+  content: ChapterItem[]
+}
+
+export interface ZhouYi {
+  title: string
+  abstract: string[]
+  content: ChapterItem[]
+}

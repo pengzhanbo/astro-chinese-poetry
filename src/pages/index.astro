@@ -15,7 +15,7 @@ import Layout from '~/layouts/Layout.astro'
           <div class="text-xl">
             <p>
               <AutoLink
-                className="text-text-2"
+                class="text-text-2"
                 href={
                   page.items && page.items.length ? undefined : `/${page.id}`
                 }
@@ -27,7 +27,7 @@ import Layout from '~/layouts/Layout.astro'
                 {page.items.map((item) => (
                   <p class="mx-4">
                     <AutoLink
-                      className="text-text-2"
+                      class="text-text-2"
                       href={`/${item.id}`}
                       text={`《${item.title}》`}
                     />

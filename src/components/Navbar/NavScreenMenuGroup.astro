@@ -1,0 +1,103 @@
+---
+import IconPlus from '../icons/IconPlus.astro'
+import NavScreenMenuGroupLink from './NavScreenMenuGroupLink.astro'
+import NavScreenMenuGroupSection from './NavScreenMenuGroupSection.astro'
+import type { NavItemWithChildren, NavItemWithLink } from '~/types'
+
+export interface Props {
+  text: string
+  items: NavItemWithChildren[]
+}
+const { text, items } = Astro.props
+const groupId = `navScreenGroup-${text.replace(' ', '-').toLowerCase()}`
+---
+
+<div class="nav-screen-menu-group">
+  <button class="button" aria-controls={groupId} aria-expanded="false">
+    <span class="button-text">{text}</span>
+    <span class="icon"><IconPlus /></span>
+  </button>
+  <div class="items" id={groupId}>
+    {
+      items.map((item) =>
+        'link' in item ? (
+          <div class="item">
+            <NavScreenMenuGroupLink item={item as NavItemWithLink} />
+          </div>
+        ) : (
+          <div class="group">
+            <NavScreenMenuGroupSection
+              text={item.text}
+              items={item.items as NavItemWithLink[]}
+            />
+          </div>
+        ),
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .nav-screen-menu-group {
+    border-bottom: 1px solid var(--c-divider);
+    height: 48px;
+    overflow: hidden;
+    transition: border-color 0.5s;
+  }
+
+  .nav-screen-menu-group .items {
+    visibility: hidden;
+  }
+
+  .nav-screen-menu-group.open .items {
+    visibility: visible;
+  }
+
+  .nav-screen-menu-group.open {
+    padding-bottom: 10px;
+    height: auto;
+  }
+
+  .nav-screen-menu-group.open .button {
+    padding-bottom: 6px;
+    color: var(--c-brand);
+  }
+
+  .nav-screen-menu-group.open .button-icon {
+    /*rtl:ignore*/
+    transform: rotate(45deg);
+  }
+
+  .button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 4px 11px 0;
+    width: 100%;
+    line-height: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--c-text-1);
+    transition: color 0.25s;
+  }
+
+  .button:hover {
+    color: var(--c-brand);
+  }
+
+  .button-icon {
+    width: 14px;
+    height: 14px;
+    fill: var(--c-text-2);
+    transition: fill 0.5s, transform 0.25s;
+  }
+
+  .group:first-child {
+    padding-top: 0px;
+  }
+
+  .group + .group,
+  .group + .item {
+    padding-top: 4px;
+  }
+</style>

@@ -26,12 +26,7 @@ const paragraphs = !split ? content : content.map(normalizeStr)
 >
   {
     paragraphs.map((paragraph) => (
-      <p
-        class:list={[
-          'mt-0 mb-3 tracking-wider leading-8',
-          { 'mx-4': flex, 'indent-8': indent },
-        ]}
-      >
+      <p class:list={[{ 'mx-4': flex, 'indent-8': indent }]}>
         {!isArray(paragraph)
           ? paragraph
           : paragraph.map((par) => (
@@ -43,3 +38,11 @@ const paragraphs = !split ? content : content.map(normalizeStr)
     ))
   }
 </div>
+
+<style>
+  .post-content p {
+    margin: 0 0 0.75rem 0;
+    letter-spacing: 0.05rem;
+    line-height: 2rem;
+  }
+</style>

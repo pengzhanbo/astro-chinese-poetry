@@ -1,19 +1,19 @@
 ---
 import IconExternal from './icons/IconExternal.astro'
-import type { ClassName } from '~/types'
+import type { BaseProps } from '~/types'
 import { isExternal as _isExternal, normalizeLink } from '~/utils'
 
-export interface Props {
+export interface Props extends BaseProps {
   href?: string
   text?: string
   target?: string
   rel?: string
   noIcon?: boolean
-  className?: ClassName
+  tabindex?: string | number
 }
 
 const props = Astro.props
-const { text, href: _href, noIcon } = props
+const { text, href: _href, noIcon, tabindex } = props
 
 const isLink = !!_href
 const isExternal = _href && _isExternal(_href)
@@ -23,16 +23,21 @@ const rel = props.rel || (isExternal ? 'noreferrer' : undefined)
 
 const href = isLink ? normalizeLink(_href) : undefined
 
-const className = ['auto-link', props.className]
+const className = props['class:list'] || props.class
 ---
 
 {
   isLink ? (
     <a
-      class:list={[...className, 'hover:text-brand transition-colors']}
+      class:list={[
+        'auto-link',
+        'hover:text-brand transition-colors',
+        className,
+      ]}
       {href}
       {target}
       {rel}
+      {tabindex}
     >
       <slot>{text || href}</slot>
       {isExternal && !noIcon ? (
@@ -42,7 +47,7 @@ const className = ['auto-link', props.className]
       ) : null}
     </a>
   ) : (
-    <span class:list={className}>
+    <span class:list={['auto-link', className]}>
       <slot>{text || href}</slot>
     </span>
   )

@@ -1,0 +1,43 @@
+---
+import AImage from '../AImage.astro'
+import { siteTitle } from '~/config/site'
+import { hasSidebar as hasSidebarRaw } from '~/supports/sidebar'
+
+const hasSidebar = hasSidebarRaw(Astro.url.pathname)
+---
+
+<div class:list={['navbar-title-wrapper', { 'has-sidebar': hasSidebar }]}>
+  <a href="/" class="title">
+    <AImage class="logo" src="/logo@3x.png" alt="logo" />
+    {siteTitle}
+  </a>
+</div>
+
+<style>
+  .title {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid transparent;
+    width: 100%;
+    height: var(--nav-height);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--c-text-1);
+    transition: opacity 0.25s;
+  }
+
+  @media (min-width: 960px) {
+    .title {
+      flex-shrink: 0;
+    }
+
+    .navbar-title-wrapper.has-sidebar .title {
+      border-bottom-color: var(--c-divider);
+    }
+  }
+
+  .logo {
+    margin-right: 8px;
+    height: 24px;
+  }
+</style>

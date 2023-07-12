@@ -2,6 +2,11 @@ type ClassNameItem = string | Record<string, boolean | undefined>
 
 export type ClassName = ClassNameItem | ClassNameItem[]
 
+export interface BaseProps {
+  'class'?: string
+  'class:list'?: ClassName
+}
+
 export interface SidebarItem {
   text: string
   link?: string
@@ -11,13 +16,28 @@ export interface SidebarItem {
 
 export type SidebarOptions = SidebarItem[]
 
-export interface NavbarItem {
+export interface NavItemWithLink {
   text: string
-  link?: string
-  items?: NavbarItem[]
+  link: string
+  activeMatch?: string
+  rel?: string
+  target?: string
 }
 
-export type NavbarOptions = NavbarItem[]
+export interface NavItemChildren {
+  text?: string
+  items: NavItemWithLink[]
+}
+
+export interface NavItemWithChildren {
+  text?: string
+  items: (NavItemChildren | NavItemWithLink)[]
+  activeMatch?: string
+}
+
+export type NavItem = NavItemWithLink | NavItemWithChildren
+
+export type NavOptions = NavItem[]
 
 export interface LinkOptions {
   text?: string

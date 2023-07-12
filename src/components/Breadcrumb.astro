@@ -30,7 +30,7 @@ const list: BreadcrumbItem[] = [
       list.map((item, i) => (
         <li class="flex items-center">
           <AutoLink
-            className={{ 'text-brand font-bold': item.active }}
+            class:list={{ 'text-brand font-bold': item.active }}
             href={item.link}
             text={item.text}
           />

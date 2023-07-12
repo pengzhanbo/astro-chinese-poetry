@@ -15,7 +15,7 @@ const { prev, next } = Astro.props
     <div class="prev-next">
       <div class="pager">
         {prev ? (
-          <AutoLink className="pager-link prev" href={prev.link}>
+          <AutoLink class="pager-link prev" href={prev.link}>
             <span class="desc">上一页</span>
             <span class="title">{prev.text}</span>
           </AutoLink>
@@ -23,7 +23,7 @@ const { prev, next } = Astro.props
       </div>
       <div class:list={['pager', { 'has-prev': prev }]}>
         {next ? (
-          <AutoLink className="pager-link next" href={next.link}>
+          <AutoLink class="pager-link next" href={next.link}>
             <span class="desc">下一页</span>
             <span class="title">{next.text}</span>
           </AutoLink>

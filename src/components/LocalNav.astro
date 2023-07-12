@@ -1,0 +1,77 @@
+---
+import IconAlignLeft from './icons/IconAlignLeft.astro'
+import { hasSidebar as hasSidebarRaw } from '~/supports'
+
+const hasSidebar = hasSidebarRaw(Astro.url.pathname)
+---
+
+{
+  hasSidebar && (
+    <div class="local-nav">
+      <button
+        class="menu"
+        id="localNav"
+        aria-expanded="false"
+        aria-controls="sidebarEl"
+      >
+        <span class="menu-icon">
+          <IconAlignLeft />
+        </span>
+        <span class="menu-text">目录</span>
+      </button>
+    </div>
+  )
+}
+
+<style>
+  .local-nav {
+    position: sticky;
+    top: 0;
+    /*rtl:ignore*/
+    left: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--c-gutter);
+    padding-top: 0;
+    width: 100%;
+    background-color: var(--local-nav-bg-color);
+    transition: border-color 0.5s, background-color 0.5s;
+  }
+
+  @media (min-width: 960px) {
+    .local-nav {
+      display: none;
+    }
+  }
+
+  .menu {
+    display: flex;
+    align-items: center;
+    padding: 12px 24px 11px;
+    line-height: 24px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--c-text-2);
+    transition: color 0.5s;
+  }
+
+  .menu:hover {
+    color: var(--c-text-1);
+    transition: color 0.25s;
+  }
+
+  @media (min-width: 768px) {
+    .menu {
+      padding: 0 32px;
+    }
+  }
+
+  .menu-icon {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+</style>

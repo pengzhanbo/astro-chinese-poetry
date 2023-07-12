@@ -3,6 +3,7 @@ import chuCi from '~/database/chuci.json'
 import chunQiu from '~/database/chunqiu.json'
 import diZiGui from '~/database/dizigui.json'
 import guWenGuanZhi from '~/database/guwenguanzhi.json'
+import liJi from '~/database/liji.json'
 import lunYu from '~/database/lunyu.json'
 import mengZi from '~/database/mengzi.json'
 import qianJiaShi from '~/database/qianjiashi.json'
@@ -13,6 +14,7 @@ import tangShi300 from '~/database/tang-shi-300.json'
 import wenZiMengQiu from '~/database/wenzimengqiu.json'
 import youXueQiongLin from '~/database/youxueqionglin.json'
 import zengGuangXianWen from '~/database/zengguangxianwen.json'
+import ZhouYi from '~/database/zhouyi.json'
 import type { SidebarOptions } from '~/types'
 import { slugify } from '~/utils'
 
@@ -44,6 +46,14 @@ export const sidebarConfig: Record<string, SidebarOptions> = {
       text: chapter,
       link: `/shang-shu/${slugify(title, chapter)}`,
     })),
+  })),
+  '/li-ji': liJi.content.map(({ chapter }) => ({
+    text: chapter,
+    link: `/li-ji/${slugify(chapter)}`,
+  })),
+  '/zhou-yi': ZhouYi.content.map(({ chapter }) => ({
+    text: chapter,
+    link: `/zhou-yi/${slugify(chapter)}`,
   })),
   '/chun-qiu': chunQiu.content.map(({ chapter }) => ({
     text: chapter,

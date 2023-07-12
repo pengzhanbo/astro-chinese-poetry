@@ -1,0 +1,25 @@
+---
+import NavScreenMenuGroup from './NavScreenMenuGroup.astro'
+import NavScreenMenuLink from './NavScreenMenuLink.astro'
+import { navConfig } from '~/config/nav'
+import type { BaseProps, NavItemChildren } from '~/types'
+
+export interface Props extends BaseProps {}
+
+const className = Astro.props['class:list'] || Astro.props.class
+---
+
+<nav class:list={['nav-screen-menu-wrapper', className]}>
+  {
+    navConfig.map((item) =>
+      'link' in item ? (
+        <NavScreenMenuLink item={item} />
+      ) : (
+        <NavScreenMenuGroup
+          text={item.text || ''}
+          items={item.items as NavItemChildren[]}
+        />
+      ),
+    )
+  }
+</nav>

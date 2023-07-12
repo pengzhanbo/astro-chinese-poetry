@@ -1,0 +1,22 @@
+---
+import Flyout from './Flyout.astro'
+import type { NavItemWithChildren } from '~/types'
+import { isActive } from '~/utils'
+
+export interface Props {
+  item: NavItemWithChildren
+}
+
+const { item } = Astro.props
+const active = isActive(
+  Astro.url.pathname,
+  item.activeMatch,
+  !!item.activeMatch,
+)
+---
+
+<Flyout
+  class:list={{ 'navbar-menu-group': true, active }}
+  button={item.text}
+  items={item.items}
+/>

@@ -20,23 +20,57 @@ sidebar &&
 
 {
   sidebar ? (
-    <div class="sidebar-wrapper">
-      <div class="curtain" />
-      <nav class="nav" aria-labelledby="sidebar-aria-label" tabindex="-1">
-        <span id="sidebar-aria-label" class="visually-hidden">
-          Sidebar Navigation
-        </span>
-        {sidebar.map((item) => (
-          <div class="group">
-            <SidebarItem item={item} depth={0} />
-          </div>
-        ))}
-      </nav>
-    </div>
+    <>
+      <div class="backdrop" />
+      <div class="sidebar-wrapper" id="sidebarEl">
+        <div class="curtain" />
+        <nav class="nav" aria-labelledby="sidebar-aria-label" tabindex="-1">
+          <span id="sidebar-aria-label" class="visually-hidden">
+            Sidebar Navigation
+          </span>
+          {sidebar.map((item) => (
+            <div class="group">
+              <SidebarItem item={item} depth={0} />
+            </div>
+          ))}
+        </nav>
+      </div>
+    </>
   ) : null
 }
 
+<script src="./sidebar.ts"></script>
+
 <style>
+  .backdrop {
+    position: fixed;
+    top: 0;
+    /*rtl:ignore*/
+    right: 0;
+    bottom: 0;
+    /*rtl:ignore*/
+    left: 0;
+    z-index: 49;
+    background: var(--backdrop-bg-color);
+    transition: opacity 0.5s;
+    display: none;
+    opacity: 0;
+  }
+
+  .backdrop.show {
+    display: block;
+  }
+
+  .backdrop.animation {
+    opacity: 1;
+  }
+
+  @media (min-width: 1280px) {
+    .backdrop {
+      display: none;
+    }
+  }
+
   .sidebar-wrapper {
     position: fixed;
     top: 0;

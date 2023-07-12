@@ -1,0 +1,30 @@
+---
+import NavScreenMenuGroupLink from './NavScreenMenuGroupLink.astro'
+import type { NavItemWithLink } from '~/types'
+
+export interface Props {
+  text?: string
+  items: NavItemWithLink[]
+}
+const { text, items } = Astro.props
+---
+
+<div class="nav-screen-menu-group-section">
+  {text && <p class="title">{text}</p>}
+  {items.map((item) => <NavScreenMenuGroupLink {item} />)}
+</div>
+
+<style>
+  .nav-screen-menu-group-section {
+    display: block;
+  }
+
+  .title {
+    margin: 0;
+    line-height: 32px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--c-text-2);
+    transition: color 0.25s;
+  }
+</style>

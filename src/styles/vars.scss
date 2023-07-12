@@ -18,9 +18,16 @@
 
   --c-bg: #fff;
 
+  --c-bg-elv: #fff;
+
   --c-border: rgba(60, 60, 67, 0.29);
   --c-divider: rgba(60, 60, 67, 0.12);
   --c-gutter: rgba(60, 60, 67, 0.12);
+
+  --c-neutral: var(--c-black);
+  --c-neutral-inverse: var(--c-white);
+
+  --c-bg-soft: #f6f6f7;
 
   --c-text-1: var(--c-text-light-1);
   --c-text-2: var(--c-text-light-2);
@@ -31,20 +38,33 @@
   --c-brand-light-2: #e17b34;
 
   --c-bg-alt: #fbfbfc;
+
+  --c-mute: #f6f6f7;
+
+  --backdrop-bg-color: rgba(0, 0, 0, 0.6);
 }
 
 .dark {
   --c-bg: #1e1e20;
 
+  --c-bg-elv: #252529;
+
   --c-border: rgba(82, 82, 89, 0.68);
   --c-divider: rgba(82, 82, 89, 0.32);
   --c-gutter: #000;
+
+  --c-neutral: var(--c-white);
+  --c-neutral-inverse: var(--c-black);
+
+  --c-bg-soft: #252529;
 
   --c-text-1: var(--c-text-dark-1);
   --c-text-2: var(--c-text-dark-2);
   --c-text-3: var(--c-text-dark-3);
 
   --c-bg-alt: #161618;
+
+  --c-mute: #313136;
 }
 
 /* Typography */
@@ -65,10 +85,12 @@
   --layout-max-width: 1440px;
 }
 
-/* Navbar */
+/* Nav */
 :root {
   --nav-height: 64px;
   --nav-bg: var(--c-bg);
+  --nav-screen-bg-color: var(--c-bg);
+  --local-nav-bg-color: var(--c-bg);
 }
 
 /**
@@ -90,4 +112,16 @@
   --shadow-3: 0 12px 32px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.08);
   --shadow-4: 0 14px 44px rgba(0, 0, 0, 0.12), 0 3px 9px rgba(0, 0, 0, 0.12);
   --shadow-5: 0 18px 56px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.16);
+}
+
+/**
+ * Component: Input
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --input-border-color: var(--c-border);
+  --input-bg-color: var(--c-bg-alt);
+  --input-hover-border-color: var(--c-gray);
+
+  --input-switch-bg-color: var(--c-mute);
 }

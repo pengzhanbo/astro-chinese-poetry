@@ -1,0 +1,55 @@
+---
+import AutoLink from './AutoLink.astro'
+import type { NavItemWithLink } from '~/types'
+import { isActive } from '~/utils'
+import {} from 'astro'
+
+export interface Props {
+  item: NavItemWithLink
+}
+
+const url = Astro.url.pathname
+const item = Astro.props.item
+
+const active = isActive(url, item.activeMatch || item.link, !!item.activeMatch)
+---
+
+<div class="menu-link">
+  <AutoLink
+    class:list={{ active, link: !!item.link }}
+    href={item.link}
+    text={item.text}
+    rel={item.rel}
+    target={item.target}
+    tabindex="0"
+  />
+</div>
+
+<style>
+  .VPMenuGroup + .menu-link {
+    margin: 12px -12px 0;
+    border-top: 1px solid var(--c-divider);
+    padding: 12px 12px 0;
+  }
+
+  .link {
+    display: block;
+    border-radius: 6px;
+    padding: 0 12px;
+    line-height: 32px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--c-text-1);
+    white-space: nowrap;
+    transition: background-color 0.25s, color 0.25s;
+  }
+
+  .link:hover {
+    color: var(--c-brand);
+    background-color: var(--c-bg-elv-mute);
+  }
+
+  .link.active {
+    color: var(--c-brand);
+  }
+</style>
