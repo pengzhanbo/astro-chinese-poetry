@@ -19,7 +19,7 @@ import type { SidebarOptions } from '~/types'
 import { slugify } from '~/utils'
 
 export const sidebarConfig: Record<string, SidebarOptions> = {
-  '/lun-yu': lunYu.map(({ chapter }) => ({
+  '/lun-yu': lunYu.content.map(({ chapter }) => ({
     text: chapter,
     link: `/lun-yu/${slugify(chapter)}`,
   })),
@@ -36,7 +36,7 @@ export const sidebarConfig: Record<string, SidebarOptions> = {
     })
     return res
   }, [] as SidebarOptions),
-  '/meng-zi': mengZi.map(({ chapter }) => ({
+  '/meng-zi': mengZi.content.map(({ chapter }) => ({
     text: chapter,
     link: `/meng-zi/${slugify(chapter)}`,
   })),
@@ -124,7 +124,7 @@ export const sidebarConfig: Record<string, SidebarOptions> = {
     collapsed: true,
     text: `第${index * 50 + 1} - ${index * 50 + items.length}首`,
   })),
-  '/chu-ci': chuCi.reduce((res, item) => {
+  '/chu-ci': chuCi.content.reduce((res, item) => {
     let sections = res.find((s) => s.text === item.section)
     if (!sections) {
       sections = { text: item.section, items: [] }

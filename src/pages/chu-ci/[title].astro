@@ -14,7 +14,7 @@ export interface Props {
 }
 
 export function getStaticPaths() {
-  return datas.map((post: ChuCiItem, index) => ({
+  return datas.content.map((post: ChuCiItem, index) => ({
     params: { title: slugify(post.title) },
     props: { post, index },
   }))

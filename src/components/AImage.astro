@@ -1,24 +1,36 @@
 ---
-import type { BaseProps } from '~/types'
+import type { ImgAttributes } from 'astro:assets'
 
-export interface Props extends BaseProps {
+export interface Props extends ImgAttributes {
   src: string | { light?: string; dark?: string }
-  alt?: string
 }
 
-const { alt } = Astro.props
-const src = typeof Astro.props.src === 'string' ? Astro.props.src : undefined
-const mode = typeof Astro.props.src === 'string' ? undefined : Astro.props.src
+const { src: _src, ...other } = Astro.props
+const src = typeof _src === 'string' ? _src : undefined
+const mode = typeof _src === 'string' ? undefined : _src
 const className = Astro.props['class:list'] || Astro.props.class
 ---
 
 {
   mode ? (
     <>
-      <Astro.self class:list={['light', className]} src={mode.light} {alt} />
-      <Astro.self class:list={['dark', className]} src={mode.dark} {alt} />
+      <Astro.self
+        class:list={['light', className]}
+        src={mode.light}
+        {...other}
+      />
+      <Astro.self class:list={['dark', className]} src={mode.dark} {...other} />
     </>
   ) : (
-    src && <img {src} {alt} class:list={['a-image', className]} />
+    src && <img {src} {...other} class:list={['a-image', className]} />
   )
 }
+
+<style is:global>
+  html:not(.dark) .a-image.dark {
+    display: none;
+  }
+  .dark .a-image.light {
+    display: none;
+  }
+</style>
