@@ -35,16 +35,15 @@ data.paragraphs.forEach((paragraph, index) => {
         <span class="mr-4">[{data.author}]</span>
         <span>[{data.tags}]</span>
       </p>
-      <!-- <PostContent content={data.paragraphs} split flex /> -->
       <div
         class="post-content font-medium flex flex-wrap items-center justify-center -mx-4"
       >
         {
           words.map((word) => (
-            <div class="mt-0 mb-4 tracking-wider leading-8 mx-4 flex items-center">
+            <div class="word-content">
               {word.map(([spell, letter]) => (
-                <div class="w-[3em] text-center">
-                  <p class="my-0 text-text-2 font-normal">{spell}</p>
+                <div class="word">
+                  <p class="spell">{spell}</p>
                   <p class="my-0">{letter}</p>
                 </div>
               ))}
@@ -55,3 +54,22 @@ data.paragraphs.forEach((paragraph, index) => {
     </div>
   </div>
 </Layout>
+
+<style>
+  .post-content .word-content {
+    display: flex;
+    align-items: center;
+    margin: 0 1rem 1rem;
+    line-height: 2rem;
+  }
+  .post-content .word {
+    width: 2.5em;
+    text-align: center;
+  }
+  .post-content .word .spell {
+    margin: 0 0;
+    color: var(--c-text-2);
+    font-weight: normal;
+    font-size: 14px;
+  }
+</style>

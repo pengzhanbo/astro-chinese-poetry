@@ -17,7 +17,7 @@ const paragraphs = !split ? content : content.map(normalizeStr)
 
 <div
   class:list={[
-    'post-content font-medium',
+    'post-content',
     {
       'text-center': center,
       'flex flex-wrap items-center justify-center -mx-4': flex,
@@ -41,8 +41,9 @@ const paragraphs = !split ? content : content.map(normalizeStr)
 
 <style>
   .post-content p {
-    margin: 0 0 0.75rem 0;
-    letter-spacing: 0.05rem;
-    line-height: 2rem;
+    margin: 0 0 1rem 0;
+    letter-spacing: 0.1rem;
+    font-size: 17px;
+    line-height: 2.25rem;
   }
 </style>

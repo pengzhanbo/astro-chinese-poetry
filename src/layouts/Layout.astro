@@ -15,28 +15,22 @@ export interface Props {
 
 const { title } = Astro.props
 const pageTitle = title ? `${title} | ${siteTitle}` : siteTitle
+const appearanceScript =
+  ";(function(){var um=localStorage.getItem('poetry-appearance');var sdm=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;if(um==='dark'||(um!=='light'&&sdm)){document.documentElement.classList.add('dark');}})();"
 ---
 
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
+    <meta
+      name="description"
+      content="中国古典文学，中国古诗词，蒙学，四书五经"
+    />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="icon" type="image/png" href="/logo.png" />
     <meta name="generator" content={Astro.generator} />
-    <script is:inline>
-      // eslint-disable-next-line @typescript-eslint/no-extra-semi, prettier/prettier
-      ;(function () {
-        const userMode = localStorage.getItem('poetry-appearance')
-        const systemDarkMode =
-          window.matchMedia &&
-          window.matchMedia('(prefers-color-scheme: dark)').matches
-        if (userMode === 'dark' || (userMode !== 'light' && systemDarkMode)) {
-          document.documentElement.classList.add('dark')
-        }
-      })()
-    </script>
+    <script set:html={appearanceScript} />
     <title>{pageTitle}</title>
   </head>
   <body>
