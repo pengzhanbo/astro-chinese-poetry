@@ -23,7 +23,7 @@ export const sidebarConfig: Record<string, SidebarOptions> = {
     text: chapter,
     link: `/lun-yu/${slugify(chapter)}`,
   })),
-  '/shi-jing': shiJing.reduce((res, item) => {
+  '/shi-jing': shiJing.content.reduce((res, item) => {
     const cate = `${item.chapter} · ${item.section}`
     let chapters = res.find((s) => s.text === cate)
     if (!chapters) {

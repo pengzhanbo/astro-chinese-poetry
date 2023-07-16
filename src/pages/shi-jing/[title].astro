@@ -14,7 +14,7 @@ export interface Props {
 }
 
 export function getStaticPaths() {
-  return datas.map((post: ShiJingItem, index) => ({
+  return datas.content.map((post: ShiJingItem, index) => ({
     params: { title: slugify(post.chapter, post.section, post.title) },
     props: { post, index },
   }))
