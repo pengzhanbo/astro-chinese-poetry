@@ -8,6 +8,12 @@ export interface PoetryItem {
 
 export type PoetryOptions = PoetryItem[]
 
+export interface Book {
+  title: string
+  id: string
+  abstract: string[]
+}
+
 export interface ChapterItem {
   chapter: string
   paragraphs: string[]

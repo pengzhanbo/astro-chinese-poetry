@@ -1,5 +1,6 @@
 ---
 import { toArray } from '@pengzhanbo/utils'
+import BookCover from '~/components/BookCover.astro'
 import Breadcrumb from '~/components/Breadcrumb.astro'
 import PostContent from '~/components/PostContent.astro'
 import data from '~/database/zhongyong.json'
@@ -15,14 +16,19 @@ const descriptions = toArray(description)
 <Layout title={title}>
   <div class="py-6 px-5 md:px-10">
     <Breadcrumb list={[{ text: title, active: true }]} />
-    <div class="py-6 max-w-3xl mx-auto border-b border-b-border">
-      {descriptions.map((desc) => <p class="px-4">{desc}</p>)}
+    <div
+      class="xl:flex py-6 max-w-3xl mx-auto border-b border-b-border items-start"
+    >
+      <BookCover {title} class="mt-5 mx-auto" />
+      <div class="flex-1 ml-4">
+        {descriptions.map((desc) => <p class="px-4">{desc}</p>)}
+      </div>
     </div>
     <div class="pt-6 max-w-3xl mx-auto">
-      <h3 class="text-2xl font-bold text-brand mt-10 mb-4">
+      <h3 class="text-2xl font-bold text-brand mt-10 mb-4 text-center">
         {data.chapter}
       </h3>
-      <PostContent content={data.paragraphs} indent />
+      <PostContent content={data.traditional} indent />
     </div>
   </div>
 </Layout>

@@ -14,7 +14,7 @@ export interface Props {
 }
 
 export const getStaticPaths = () => {
-  return datas.map((post: TangShi300Item, index) => {
+  return datas.content.map((post: TangShi300Item, index) => {
     return {
       params: { id: post.id },
       props: { post, index },

@@ -2,14 +2,14 @@
 import { toArray } from '@pengzhanbo/utils'
 import Breadcrumb from '~/components/Breadcrumb.astro'
 import PostContent from '~/components/PostContent.astro'
-import data from '~/database/baijiaxing.json'
+import { baiJiaXing, books } from '~/config/books'
+import { Books } from '~/config/site'
 import Layout from '~/layouts/Layout.astro'
-import { getPoetriesConfig } from '~/supports'
 
-const poetry = getPoetriesConfig('bai-jia-xing')!
+const book = books[Books.baijiaxing]
 
-const { title, description } = poetry
-const descriptions = toArray(description)
+const { title, abstract } = book
+const descriptions = toArray(abstract)
 ---
 
 <Layout title={title}>
@@ -20,13 +20,13 @@ const descriptions = toArray(description)
     </div>
     <div class="pt-6 text-center">
       <h3 class="text-2xl font-bold text-brand mt-10 mb-4">
-        {data.title}
+        {baiJiaXing.title}
       </h3>
       <p class="flex justify-center items-center text-text-2">
-        <span class="mr-4">[{data.author}]</span>
-        <span>[{data.tags}]</span>
+        <span class="mr-4">[{baiJiaXing.author}]</span>
+        <span>[{baiJiaXing.tags}]</span>
       </p>
-      <PostContent content={data.paragraphs} />
+      <PostContent content={baiJiaXing.paragraphs} />
     </div>
   </div>
 </Layout>

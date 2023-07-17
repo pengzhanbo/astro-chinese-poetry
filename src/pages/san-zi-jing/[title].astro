@@ -2,8 +2,7 @@
 import Breadcrumb from '~/components/Breadcrumb.astro'
 import PostContent from '~/components/PostContent.astro'
 import PrevNext from '~/components/PrevNext.astro'
-import news from '~/database/sanzijing-new.json'
-import traditional from '~/database/sanzijing-traditional.json'
+import datas from '~/database/sanzijing.json'
 import Layout from '~/layouts/Layout.astro'
 import { getPoetriesConfig, pervNext } from '~/supports'
 import type { SanZiJing } from '~/types'
@@ -14,13 +13,10 @@ export interface Props {
 }
 
 export function getStaticPaths() {
-  return [
-    { params: { title: 'new' }, props: { post: news, index: 0 } },
-    {
-      params: { title: 'traditional' },
-      props: { post: traditional, index: 1 },
-    },
-  ]
+  return datas.content.map((post, index) => ({
+    params: { title: post.chapter },
+    props: { post, index },
+  }))
 }
 
 const poetry = getPoetriesConfig('san-zi-jing')!
@@ -29,11 +25,11 @@ const { title, id } = poetry
 const { paragraphs, tags, author, title: postTitle } = Astro.props.post
 
 const { prev, next } = pervNext(
-  ['new', 'traditional'],
+  getStaticPaths(),
   Astro.props.index,
-  (type) => ({
-    text: type === 'new' ? news.tags : traditional.tags,
-    link: `/${id}/${type}`,
+  ({ params, props }) => ({
+    text: props.post.chapter,
+    link: `/${id}/${params.title}`,
   }),
 )
 ---

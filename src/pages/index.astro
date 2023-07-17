@@ -1,13 +1,14 @@
 ---
 import AutoLink from '~/components/AutoLink.astro'
 import { poetries } from '~/config/poetries'
+import { siteTitle } from '~/config/site'
 import Layout from '~/layouts/Layout.astro'
 ---
 
 <Layout>
   <main class="home-wrapper px-6 pb-10">
     <h2 class="text-2xl font-bold tracking-widest text-brand mb-10">
-      中国古典文学
+      {siteTitle}
     </h2>
     <div class="content">
       {

@@ -2,16 +2,17 @@
 import { toArray } from '@pengzhanbo/utils'
 import Layout from './Layout.astro'
 import Breadcrumb from '~/components/Breadcrumb.astro'
-import { getPoetriesConfig } from '~/supports'
+import { books } from '~/config/books'
+import type { Books } from '~/config/site'
 
 export interface Props {
-  poetry: string
+  book: Books
 }
 
-const poetry = getPoetriesConfig(Astro.props.poetry)!
+const book = books[Astro.props.book]
 
-const { title, description } = poetry
-const descriptions = toArray(description)
+const { title, abstract } = book
+const descriptions = toArray(abstract)
 ---
 
 <Layout title={title}>
