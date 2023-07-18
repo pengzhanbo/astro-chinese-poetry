@@ -1,0 +1,26 @@
+---
+import BookCover from './BookCover.astro'
+import type { BaseProps } from '~/types'
+
+export interface Props extends BaseProps {
+  title: string
+  abstract: string[]
+  border?: boolean
+}
+
+const { title, abstract, border } = Astro.props
+const className = Astro.props['class:list'] || Astro.props.class
+---
+
+<div
+  class:list={[
+    'xl:flex py-6 items-start',
+    className,
+    { 'border-b border-b-border': border },
+  ]}
+>
+  <div class="pt-5"><BookCover {title} /></div>
+  <div class="flex-1 xl:ml-4">
+    {abstract.map((desc) => <p>{desc}</p>)}
+  </div>
+</div>
