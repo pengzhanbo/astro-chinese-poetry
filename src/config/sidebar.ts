@@ -1,4 +1,4 @@
-import { chunk, combineURLs } from '@pengzhanbo/utils'
+import { chunk } from '@pengzhanbo/utils'
 import {
   chuCi,
   chunQiu,
@@ -20,14 +20,14 @@ import {
 } from './books'
 import { Books } from './site'
 import type { SidebarOptions } from '~/types'
-import { slugify } from '~/utils'
+import { combine } from '~/utils'
 
 export const sidebarConfig: Record<string, SidebarOptions> = {}
 
 addSideBarConfig(Books.lunyu, normalSidebar(Books.lunyu, lunYu.content))
 addSideBarConfig(Books.mengzi, normalSidebar(Books.mengzi, mengZi.content))
 addSideBarConfig(Books.liji, normalSidebar(Books.liji, liJi.content))
-addSideBarConfig(Books.zhongyong, normalSidebar(Books.zhouyi, zhouYi.content))
+addSideBarConfig(Books.zhouyi, normalSidebar(Books.zhouyi, zhouYi.content))
 addSideBarConfig(Books.chunqiu, normalSidebar(Books.chunqiu, chunQiu.content))
 
 addSideBarConfig(
@@ -41,10 +41,7 @@ addSideBarConfig(
     }
     chapters.items?.push({
       text: item.title,
-      link: combine(
-        Books.shijing,
-        slugify(item.chapter, item.section, item.title),
-      ),
+      link: combine(Books.shijing, item.id),
     })
     return res
   }, [] as SidebarOptions),
@@ -54,9 +51,9 @@ addSideBarConfig(
   Books.shangshu,
   shangShu.content.map(({ title, content }) => ({
     text: title,
-    items: content.map(({ chapter }) => ({
-      text: chapter,
-      link: combine(Books.shangshu, slugify(title, chapter)),
+    items: content.map(({ title, id }) => ({
+      text: title,
+      link: combine(Books.shangshu, id),
     })),
   })),
 )
@@ -70,33 +67,26 @@ addSideBarConfig(
   Books.youxueqionglin,
   youXueQiongLin.content.map(({ title, content }) => ({
     text: title,
-    items: content.map(({ chapter }) => ({
-      text: chapter,
-      link: combine(Books.youxueqionglin, slugify(title, chapter)),
+    items: content.map(({ title, id }) => ({
+      text: title,
+      link: combine(Books.youxueqionglin, id),
     })),
   })),
 )
 
 addSideBarConfig(
   Books.qianjiashi,
-  qianJiaShi.content.map(({ type, content }) => ({
-    text: type,
-    items: content.map(({ chapter, paragraphs }) => ({
-      text: chapter,
-      link:
-        typeof paragraphs[0] !== 'string'
-          ? undefined
-          : combine(Books.qianjiashi, slugify(type, chapter)),
-      items:
-        typeof paragraphs[0] !== 'string'
-          ? (paragraphs as { subchapter: string }[]).map(({ subchapter }) => ({
-              text: subchapter,
-              link: combine(
-                Books.qianjiashi,
-                slugify(type, chapter, subchapter),
-              ),
-            }))
-          : undefined,
+  qianJiaShi.content.map(({ title, content }) => ({
+    text: title,
+    items: content.map(({ title, content, id }) => ({
+      text: title,
+      link: id && !content ? combine(Books.qianjiashi, id) : undefined,
+      items: content
+        ? content.map(({ title, id }) => ({
+            text: title,
+            link: combine(Books.qianjiashi, id),
+          }))
+        : undefined,
     })),
   })),
 )
@@ -105,9 +95,9 @@ addSideBarConfig(
   Books.guwenguanzhi,
   guWenGuanZhi.content.map(({ title, content }) => ({
     text: title,
-    items: content.map(({ chapter }) => ({
-      text: chapter,
-      link: combine(Books.guwenguanzhi, slugify(title, chapter)),
+    items: content.map(({ title, id }) => ({
+      text: title,
+      link: combine(Books.guwenguanzhi, id),
     })),
   })),
 )
@@ -116,9 +106,9 @@ addSideBarConfig(
   Books.shenglvqimeng,
   shengLvQiMeng.content.map(({ title, content }) => ({
     text: title,
-    items: content.map(({ chapter }) => ({
-      text: chapter,
-      link: combine(Books.shenglvqimeng, slugify(chapter)),
+    items: content.map(({ title, id }) => ({
+      text: title,
+      link: combine(Books.shenglvqimeng, id),
     })),
   })),
 )
@@ -158,7 +148,7 @@ addSideBarConfig(
     }
     sections.items?.push({
       text: item.title,
-      link: combine(Books.chuci, slugify(item.title)),
+      link: combine(Books.chuci, item.id),
     })
     return res
   }, [] as SidebarOptions),
@@ -168,19 +158,12 @@ function addSideBarConfig(id: string, config: SidebarOptions) {
   sidebarConfig[`/${id}`] = config
 }
 
-function combine(...args: string[]) {
-  return combineURLs('/', ...args)
-}
-
-function normalSidebar(
-  id: Books,
-  content: ({ chapter: string } | { title: string })[],
-) {
-  return content.map((item: any) => {
-    const text = item.title || item.chapter
+function normalSidebar(id: Books, content: { title: string; id: string }[]) {
+  return content.map((item) => {
+    const text = item.title
     return {
       text,
-      link: combine(id, slugify(text)),
+      link: combine(id, item.id),
     }
   })
 }

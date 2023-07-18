@@ -1,4 +1,4 @@
-import { isBrowser } from '@pengzhanbo/utils'
+import { combineURLs, isBrowser } from '@pengzhanbo/utils'
 
 export const EXTERNAL_URL_RE = /^[a-z]+:/i
 export const HASH_RE = /#.*$/
@@ -67,4 +67,7 @@ export function slugifyParams<T = Record<string, string>>(params: T): T {
     res[key] = slugify(params[key] as unknown as string) as any
   }
   return res
+}
+export function combine(...args: string[]) {
+  return combineURLs('/', ...args)
 }

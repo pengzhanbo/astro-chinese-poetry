@@ -1,0 +1,60 @@
+---
+import Breadcrumb from '~/components/Breadcrumb.astro'
+import PostContent from '~/components/PostContent.astro'
+import PrevNext from '~/components/PrevNext.astro'
+import { books, sanZiJing } from '~/config/books'
+import { Books } from '~/config/site'
+import Layout from '~/layouts/Layout.astro'
+import { pervNext } from '~/supports'
+import type { ChapterItem, PoetryItem } from '~/types'
+import { combine } from '~/utils'
+
+export interface Props {
+  post: PoetryItem
+  index: number
+}
+
+export function getStaticPaths() {
+  return sanZiJing.content.map((post, index) => ({
+    params: { id: post.id },
+    props: { post, index },
+  }))
+}
+
+const { title, id } = books[Books.sanzijing]
+const { traditional } = Astro.props.post
+
+const {
+  paragraphs,
+  author,
+  title: postTitle,
+} = traditional as ChapterItem & {
+  author: string
+}
+
+const { prev, next } = pervNext(
+  getStaticPaths(),
+  Astro.props.index,
+  ({ params, props }) => ({
+    text: props.post.title,
+    link: combine(id, params.id),
+  }),
+)
+---
+
+<Layout title={title}>
+  <div class="py-6 px-5 md:px-10 pb-20">
+    <Breadcrumb list={[{ text: title, active: true, link: `/${id}` }]} />
+    <div class="flex-1 mb-2 text-center">
+      <h3 class="text-2xl font-bold text-brand mt-10 mb-4">
+        {title}
+      </h3>
+      <p class="flex justify-center items-center text-text-2">
+        <span class="mr-4">[{author}]</span>
+        <span>[{postTitle}]</span>
+      </p>
+      <PostContent content={paragraphs} />
+    </div>
+    <PrevNext {prev} {next} />
+  </div>
+</Layout>

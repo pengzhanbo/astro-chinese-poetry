@@ -9,6 +9,7 @@ import liJi from '~/database/liji.json'
 import lunYu from '~/database/lunyu.json'
 import mengZi from '~/database/mengzi.json'
 import qianJiaShi from '~/database/qianjiashi.json'
+import qianZiWen from '~/database/qianziwen.json'
 import sanZiJing from '~/database/sanzijing.json'
 import shangShu from '~/database/shangshu.json'
 import shengLvQiMeng from '~/database/shenglvqimeng.json'
@@ -22,117 +23,44 @@ import zhouYi from '~/database/zhouyi.json'
 import zhuZiJiaXun from '~/database/zhuzijiaxun.json'
 import type { Book } from '~/types'
 
-export const books: Record<Books, Book> = {
-  [Books.lunyu]: {
-    id: Books.lunyu,
-    title: lunYu.title,
-    abstract: lunYu.abstract,
-  },
-  [Books.daxue]: {
-    id: Books.daxue,
-    title: daXue.chapter,
-    abstract: daXue.abstract,
-  },
-  [Books.zhongyong]: {
-    id: Books.zhongyong,
-    title: zhongYong.chapter,
-    abstract: zhongYong.abstract,
-  },
-  [Books.mengzi]: {
-    id: Books.mengzi,
-    title: mengZi.title,
-    abstract: mengZi.abstract,
-  },
-  [Books.shijing]: {
-    id: Books.shijing,
-    title: shiJing.title,
-    abstract: shiJing.abstract,
-  },
-  [Books.shangshu]: {
-    id: Books.shangshu,
-    title: shangShu.title,
-    abstract: shangShu.abstract,
-  },
-  [Books.liji]: {
-    id: Books.liji,
-    title: liJi.title,
-    abstract: liJi.abstract,
-  },
-  [Books.zhouyi]: {
-    id: Books.zhouyi,
-    title: zhouYi.title,
-    abstract: zhouYi.abstract,
-  },
-  [Books.chunqiu]: {
-    id: Books.chunqiu,
-    title: chunQiu.title,
-    abstract: chunQiu.abstract,
-  },
-  [Books.sanzijing]: {
-    id: Books.sanzijing,
-    title: sanZiJing.title,
-    abstract: sanZiJing.abstract,
-  },
-  [Books.baijiaxing]: {
-    id: Books.baijiaxing,
-    title: baiJiaXing.title,
-    abstract: baiJiaXing.abstract,
-  },
-  [Books.qianziwen]: {
-    id: Books.qianziwen,
-    title: qianJiaShi.title,
-    abstract: qianJiaShi.abstract,
-  },
-  [Books.dizigui]: {
-    id: Books.dizigui,
-    title: diZiGui.title,
-    abstract: diZiGui.abstract,
-  },
-  [Books.youxueqionglin]: {
-    id: Books.youxueqionglin,
-    title: youXueQiongLin.title,
-    abstract: youXueQiongLin.abstract,
-  },
-  [Books.zhuzijiaxun]: {
-    id: Books.zhuzijiaxun,
-    title: zhuZiJiaXun.title,
-    abstract: zhuZiJiaXun.abstract,
-  },
-  [Books.qianjiashi]: {
-    id: Books.qianjiashi,
-    title: qianJiaShi.title,
-    abstract: qianJiaShi.abstract,
-  },
-  [Books.guwenguanzhi]: {
-    id: Books.guwenguanzhi,
-    title: guWenGuanZhi.title,
-    abstract: guWenGuanZhi.abstract,
-  },
-  [Books.tangshi300]: {
-    id: Books.tangshi300,
-    title: tangShi300.title,
-    abstract: tangShi300.abstract,
-  },
-  [Books.wenzimengqiu]: {
-    id: Books.wenzimengqiu,
-    title: wenZiMengQiu.title,
-    abstract: wenZiMengQiu.abstract,
-  },
-  [Books.shenglvqimeng]: {
-    id: Books.shenglvqimeng,
-    title: shengLvQiMeng.title,
-    abstract: shengLvQiMeng.abstract,
-  },
-  [Books.zengguangxianwen]: {
-    id: Books.zengguangxianwen,
-    title: zengGuangXianWen.title,
-    abstract: zengGuangXianWen.abstract,
-  },
-  [Books.chuci]: {
-    id: Books.chuci,
-    title: chuCi.title,
-    abstract: chuCi.abstract,
-  },
+export const books = {} as Record<Books, Book>
+
+addBook(Books.lunyu, lunYu)
+addBook(Books.daxue, daXue)
+addBook(Books.zhongyong, zhongYong)
+addBook(Books.mengzi, mengZi)
+
+addBook(Books.shijing, shiJing)
+addBook(Books.shangshu, shangShu)
+addBook(Books.liji, liJi)
+addBook(Books.zhouyi, zhouYi)
+addBook(Books.chunqiu, chunQiu)
+
+addBook(Books.sanzijing, sanZiJing)
+addBook(Books.baijiaxing, baiJiaXing)
+addBook(Books.qianziwen, qianZiWen)
+
+addBook(Books.dizigui, diZiGui)
+addBook(Books.youxueqionglin, youXueQiongLin)
+addBook(Books.zhuzijiaxun, zhuZiJiaXun)
+addBook(Books.qianjiashi, qianJiaShi)
+addBook(Books.guwenguanzhi, guWenGuanZhi)
+addBook(Books.tangshi300, tangShi300)
+addBook(Books.wenzimengqiu, wenZiMengQiu)
+addBook(Books.shenglvqimeng, shengLvQiMeng)
+addBook(Books.zengguangxianwen, zengGuangXianWen)
+
+addBook(Books.chuci, chuCi)
+
+function addBook(
+  id: Books,
+  { title, abstract }: { title: string; abstract: string[] },
+) {
+  books[id] = {
+    id,
+    title,
+    abstract,
+  } as Book
 }
 
 export {
@@ -156,4 +84,6 @@ export {
   daXue,
   sanZiJing,
   zhuZiJiaXun,
+  qianZiWen,
+  zhongYong,
 }

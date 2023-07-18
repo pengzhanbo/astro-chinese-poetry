@@ -2,35 +2,37 @@
 import Breadcrumb from '~/components/Breadcrumb.astro'
 import PostContent from '~/components/PostContent.astro'
 import PrevNext from '~/components/PrevNext.astro'
-import datas from '~/database/liji.json'
+import { books, mengZi } from '~/config/books'
+import { Books } from '~/config/site'
 import Layout from '~/layouts/Layout.astro'
-import { getPoetriesConfig, pervNext } from '~/supports'
-import type { ChapterItem } from '~/types'
-import { slugify } from '~/utils'
+import { pervNext } from '~/supports'
+import type { PoetryItem } from '~/types'
+import { combine } from '~/utils'
 
 export interface Props {
-  post: ChapterItem
+  post: PoetryItem
   index: number
 }
 
 export function getStaticPaths() {
-  return datas.content.map((post: ChapterItem, index) => ({
-    params: { title: slugify(post.chapter) },
+  return mengZi.content.map((post, index) => ({
+    params: { id: post.id },
     props: { post, index },
   }))
 }
 
-const poetry = getPoetriesConfig('li-ji')!
+const book = books[Books.mengzi]
 
-const { title, id } = poetry
-const { paragraphs, chapter } = Astro.props.post
+const { title, id } = book
+const { traditional } = Astro.props.post
+const { title: postTitle, paragraphs } = traditional
 
 const { prev, next } = pervNext(
   getStaticPaths(),
   Astro.props.index,
   ({ params, props }) => ({
-    text: props.post.chapter,
-    link: `/${id}/${params.title}`,
+    text: props.post.title,
+    link: combine(id, params.id),
   }),
 )
 ---
@@ -40,7 +42,7 @@ const { prev, next } = pervNext(
     <Breadcrumb list={[{ text: title, active: true, link: `/${id}` }]} />
     <div class="pb-4">
       <h3 class="text-2xl font-bold text-brand mt-10 mb-6">
-        {chapter}
+        {postTitle}
       </h3>
       <PostContent content={paragraphs} indent />
     </div>

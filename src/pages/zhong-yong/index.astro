@@ -1,16 +1,13 @@
 ---
-import { toArray } from '@pengzhanbo/utils'
 import BookCover from '~/components/BookCover.astro'
 import Breadcrumb from '~/components/Breadcrumb.astro'
 import PostContent from '~/components/PostContent.astro'
-import data from '~/database/zhongyong.json'
+import { books, zhongYong } from '~/config/books'
+import { Books } from '~/config/site'
 import Layout from '~/layouts/Layout.astro'
-import { getPoetriesConfig } from '~/supports'
 
-const poetry = getPoetriesConfig('zhong-yong')!
-
-const { title, description } = poetry
-const descriptions = toArray(description)
+const { title, abstract } = books[Books.zhongyong]
+const { title: postTitle, paragraphs } = zhongYong.traditional
 ---
 
 <Layout title={title}>
@@ -21,14 +18,14 @@ const descriptions = toArray(description)
     >
       <BookCover {title} class="mt-5 mx-auto" />
       <div class="flex-1 ml-4">
-        {descriptions.map((desc) => <p class="px-4">{desc}</p>)}
+        {abstract.map((desc) => <p class="px-4">{desc}</p>)}
       </div>
     </div>
     <div class="pt-6 max-w-3xl mx-auto">
       <h3 class="text-2xl font-bold text-brand mt-10 mb-4 text-center">
-        {data.chapter}
+        {postTitle}
       </h3>
-      <PostContent content={data.traditional} indent />
+      <PostContent content={paragraphs} indent />
     </div>
   </div>
 </Layout>

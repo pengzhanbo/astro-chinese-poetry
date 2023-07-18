@@ -2,51 +2,55 @@
 import Breadcrumb from '~/components/Breadcrumb.astro'
 import PostContent from '~/components/PostContent.astro'
 import PrevNext from '~/components/PrevNext.astro'
-import Tags from '~/components/Tags.astro'
-import datas from '~/database/tang-shi-300.json'
+import { books, tangShi300 } from '~/config/books'
+import { Books } from '~/config/site'
 import Layout from '~/layouts/Layout.astro'
-import { getPoetriesConfig, pervNext } from '~/supports'
-import type { TangShi300Item } from '~/types'
+import { pervNext } from '~/supports'
+import type { ChapterItem, PoetryItem } from '~/types'
+import { combine } from '~/utils'
 
 export interface Props {
-  post: TangShi300Item
+  post: PoetryItem
   index: number
 }
 
-export const getStaticPaths = () => {
-  return datas.content.map((post: TangShi300Item, index) => {
-    return {
-      params: { id: post.id },
-      props: { post, index },
-    }
-  })
+export function getStaticPaths() {
+  return tangShi300.content.map((post, index) => ({
+    params: { id: post.id },
+    props: { post, index },
+  }))
 }
 
-const { title, author, paragraphs, tags } = Astro.props.post
+const book = books[Books.tangshi300]
 
-const poetry = getPoetriesConfig('tang-shi-300')!
-
-const { title: pageTitle, id } = poetry
+const { title, id } = book
+const { traditional } = Astro.props.post
+const {
+  title: postTitle,
+  paragraphs,
+  author,
+} = traditional as ChapterItem & {
+  author: string
+}
 
 const { prev, next } = pervNext(
   getStaticPaths(),
   Astro.props.index,
   ({ params, props }) => ({
     text: props.post.title,
-    link: `/${id}/${params.id}`,
+    link: combine(id, params.id),
   }),
 )
 ---
 
 <Layout title={title}>
   <div class="py-6 px-5 md:px-10 pb-20">
-    <Breadcrumb list={[{ text: pageTitle, active: true, link: `/${id}` }]} />
-    <div class="content pt-6 text-center">
-      <h3 class="mb-4 text-2xl font-bold tracking-widest text-brand">
-        {title}
+    <Breadcrumb list={[{ text: title, active: true, link: `/${id}` }]} />
+    <div class="pb-4 text-center">
+      <h3 class="text-2xl font-bold text-brand mt-10 mb-6">
+        {postTitle}
       </h3>
-      <p class="mb-4">{author}</p>
-      <Tags tags={tags} class="mb-6" />
+      <p class="pb-4">{author}</p>
       <PostContent content={paragraphs} />
     </div>
     <PrevNext {prev} {next} />

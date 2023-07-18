@@ -1,0 +1,100 @@
+---
+import Breadcrumb from '~/components/Breadcrumb.astro'
+import PostContent from '~/components/PostContent.astro'
+import PrevNext from '~/components/PrevNext.astro'
+import { books, qianJiaShi } from '~/config/books'
+import { Books } from '~/config/site'
+import Layout from '~/layouts/Layout.astro'
+import { pervNext } from '~/supports'
+import type { ChapterItem, PoetryItem } from '~/types'
+import { combine } from '~/utils'
+
+export interface Props {
+  post: PoetryItem
+  index: number
+  chapter: string
+}
+
+interface RouteItem {
+  params: { id: string }
+  props: Props
+}
+
+export function getStaticPaths() {
+  const res: RouteItem[] = []
+  let index = 0
+  for (let i = 0; i < qianJiaShi.content.length; i++) {
+    const { title, content } = qianJiaShi.content[i]
+    for (let j = 0; j < content.length; j++) {
+      const post = content[j]
+      if (!post.content) {
+        res.push({
+          params: { id: post.id },
+          props: { post, index, chapter: title },
+        })
+        index++
+      } else {
+        for (let k = 0; k < post.content.length; k++) {
+          const par = post.content[k]
+          res.push({
+            params: { id: par.id },
+            props: {
+              post: {
+                ...par,
+                title: `${post.title} · ${par.title}`,
+                traditional: {
+                  ...par.traditional,
+                  title: `${post.title} · ${par.traditional.title}`,
+                },
+                simplified: {
+                  ...par.simplified,
+                  title: `${post.title} · ${par.simplified.title}`,
+                },
+              },
+              index,
+              chapter: `${title} · ${post.title}`,
+            },
+          })
+          index++
+        }
+      }
+    }
+  }
+  return res
+}
+
+const { title, id } = books[Books.qianjiashi]
+
+const { traditional } = Astro.props.post
+
+const {
+  paragraphs,
+  title: postTitle,
+  author,
+} = traditional as ChapterItem & {
+  author: string
+}
+
+const { prev, next } = pervNext(
+  getStaticPaths(),
+  Astro.props.index,
+  ({ params, props }) => ({
+    text: `${props.chapter} · ${props.post.title}`,
+    link: combine(id, params.id),
+  }),
+)
+---
+
+<Layout title={title}>
+  <div class="py-6 px-5 md:px-10 pb-20">
+    <Breadcrumb list={[{ text: title, active: true, link: `/${id}` }]} />
+    <div class="pb-4 text-center">
+      <h3 class="text-2xl font-bold text-brand mt-10 mb-6">
+        {postTitle}
+      </h3>
+      <p>{author}</p>
+      <PostContent content={paragraphs} />
+    </div>
+    <PrevNext {prev} {next} />
+  </div>
+</Layout>

@@ -37,7 +37,9 @@ const hasSidebar = hasSidebarRaw(Astro.url.pathname)
     padding-top: 0;
     width: 100%;
     background-color: var(--local-nav-bg-color);
-    transition: border-color 0.5s, background-color 0.5s;
+    transition:
+      border-color 0.5s,
+      background-color 0.5s;
   }
 
   @media (min-width: 960px) {

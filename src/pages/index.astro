@@ -1,38 +1,86 @@
 ---
 import AutoLink from '~/components/AutoLink.astro'
-import { poetries } from '~/config/poetries'
-import { siteTitle } from '~/config/site'
+import BookCover from '~/components/BookCover.astro'
+import { books } from '~/config/books'
+import { Books } from '~/config/site'
 import Layout from '~/layouts/Layout.astro'
+
+interface PoetryLink {
+  text: string
+  link?: string
+  items?: PoetryLink[]
+}
+
+function item(id: Books): PoetryLink {
+  const book = books[id]
+  return {
+    text: book.title,
+    link: `/${id}`,
+  }
+}
+
+const poetries: PoetryLink[] = [
+  {
+    text: '蒙学',
+    items: [
+      item(Books.sanzijing),
+      item(Books.baijiaxing),
+      item(Books.qianziwen),
+      item(Books.dizigui),
+      item(Books.youxueqionglin),
+      item(Books.zhuzijiaxun),
+      item(Books.qianjiashi),
+      item(Books.guwenguanzhi),
+      item(Books.shenglvqimeng),
+      item(Books.wenzimengqiu),
+      item(Books.zengguangxianwen),
+      item(Books.tangshi300),
+    ],
+  },
+  {
+    text: '四书五经',
+    items: [
+      item(Books.lunyu),
+      item(Books.daxue),
+      item(Books.zhongyong),
+      item(Books.mengzi),
+      item(Books.shijing),
+      item(Books.shangshu),
+      item(Books.liji),
+      item(Books.zhouyi),
+      item(Books.chunqiu),
+    ],
+  },
+  {
+    text: '更多',
+    items: [item(Books.chuci)],
+  },
+]
 ---
 
 <Layout>
   <main class="home-wrapper px-6 pb-10">
-    <h2 class="text-2xl font-bold tracking-widest text-brand mb-10">
-      {siteTitle}
-    </h2>
     <div class="content">
       {
         poetries.map((page) => (
-          <div class="text-xl">
-            <p>
-              <AutoLink
-                class="text-text-2"
-                href={
-                  page.items && page.items.length ? undefined : `/${page.id}`
-                }
-                text={`《${page.title}》`}
-              />
-            </p>
+          <div class="pb-6">
+            <div class="mb-4">
+              {page.link ? (
+                <AutoLink class="text-text-2" href={page.link} noIcon>
+                  <BookCover title={page.text} />
+                </AutoLink>
+              ) : (
+                <p class="text-2xl font-bold pb-4">{page.text}</p>
+              )}
+            </div>
             {page.items ? (
               <div class="flex flex-wrap items-center pl-6 -mx-4">
                 {page.items.map((item) => (
-                  <p class="mx-4">
-                    <AutoLink
-                      class="text-text-2"
-                      href={`/${item.id}`}
-                      text={`《${item.title}》`}
-                    />
-                  </p>
+                  <div class="mx-4 mb-8">
+                    <AutoLink class="text-text-2" href={item.link} noIcon>
+                      <BookCover title={item.text} />
+                    </AutoLink>
+                  </div>
                 ))}
               </div>
             ) : null}

@@ -9,23 +9,26 @@ const className = Astro.props['class:list'] || Astro.props.class
 const title = Astro.props.title.split('')
 ---
 
-<div class:list={['book-cover', className]}>
-  <div class="book-cover-container">
-    <div class="title">{title.map((t) => <span>{t}</span>)}</div>
-  </div>
-  <div class="bg">
-    <div class="img"></div>
-  </div>
-  <div class="binding"></div>
-</div>
+<p class:list={['book-cover', className]}>
+  <span class="book-cover-container">
+    <span class="title">{title.map((t) => <i>{t}</i>)}</span>
+  </span>
+  <span class="bg">
+    <span class="img"></span>
+  </span>
+  <span class="binding"></span>
+</p>
 
 <style>
   .book-cover {
+    display: inline-block;
     position: relative;
     width: 140px;
     height: 198px;
+    margin: 0;
   }
   .book-cover .book-cover-container {
+    display: inline-block;
     position: absolute;
     top: 14px;
     left: 10px;
@@ -47,11 +50,12 @@ const title = Astro.props.title.split('')
     line-height: 1;
     font-size: 17px;
   }
-  .book-cover .title span {
+  .book-cover .title i {
     margin: 5px 0;
   }
 
   .book-cover .bg {
+    display: inline-block;
     position: absolute;
     top: 0;
     left: 0;
@@ -63,6 +67,7 @@ const title = Astro.props.title.split('')
     z-index: 1;
   }
   .book-cover .bg .img {
+    display: inline-block;
     position: absolute;
     bottom: 0;
     right: 15px;
@@ -75,6 +80,7 @@ const title = Astro.props.title.split('')
   }
 
   .book-cover .binding {
+    display: inline-block;
     position: absolute;
     top: 0;
     right: 15px;
@@ -86,6 +92,7 @@ const title = Astro.props.title.split('')
   .book-cover .binding::after,
   .book-cover .binding::before {
     content: '';
+    display: inline-block;
     position: absolute;
     left: 2px;
     width: 15px;

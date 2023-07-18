@@ -2,35 +2,45 @@
 import Breadcrumb from '~/components/Breadcrumb.astro'
 import PostContent from '~/components/PostContent.astro'
 import PrevNext from '~/components/PrevNext.astro'
-import datas from '~/database/shijing.json'
+import { books, shiJing } from '~/config/books'
+import { Books } from '~/config/site'
 import Layout from '~/layouts/Layout.astro'
-import { getPoetriesConfig, pervNext } from '~/supports'
-import type { ShiJingItem } from '~/types'
-import { slugify } from '~/utils'
+import { pervNext } from '~/supports'
+import type { ChapterItem, PoetryItem } from '~/types'
+import { combine } from '~/utils'
 
 export interface Props {
-  post: ShiJingItem
+  post: PoetryItem
   index: number
 }
 
 export function getStaticPaths() {
-  return datas.content.map((post: ShiJingItem, index) => ({
-    params: { title: slugify(post.chapter, post.section, post.title) },
+  return shiJing.content.map((post, index) => ({
+    params: { id: post.id },
     props: { post, index },
   }))
 }
 
-const poetry = getPoetriesConfig('shi-jing')!
+const book = books[Books.shijing]
 
-const { title, id } = poetry
-const { content, chapter, title: postTitle, section } = Astro.props.post
+const { title, id } = book
+const { traditional } = Astro.props.post
+const {
+  title: postTitle,
+  paragraphs,
+  chapter,
+  section,
+} = traditional as ChapterItem & {
+  section: string
+  chapter: string
+}
 
 const { prev, next } = pervNext(
   getStaticPaths(),
   Astro.props.index,
   ({ params, props }) => ({
-    text: `${props.post.chapter} · ${props.post.section} · ${props.post.title}`,
-    link: `/${id}/${params.title}`,
+    text: props.post.title,
+    link: combine(id, params.id),
   }),
 )
 ---
@@ -42,11 +52,11 @@ const { prev, next } = pervNext(
       <h3 class="text-2xl font-bold text-brand mt-10 mb-6">
         {postTitle}
       </h3>
-      <p class="flex justify-center items-center text-text-2">
+      <p class="pb-4">
         <span class="mr-4">[{chapter}]</span>
         <span>[{section}]</span>
       </p>
-      <PostContent content={content} />
+      <PostContent content={paragraphs} />
     </div>
     <PrevNext {prev} {next} />
   </div>

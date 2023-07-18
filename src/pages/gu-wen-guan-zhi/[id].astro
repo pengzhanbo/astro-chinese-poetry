@@ -2,34 +2,33 @@
 import Breadcrumb from '~/components/Breadcrumb.astro'
 import PostContent from '~/components/PostContent.astro'
 import PrevNext from '~/components/PrevNext.astro'
-import datas from '~/database/shangshu.json'
+import { books, guWenGuanZhi } from '~/config/books'
+import { Books } from '~/config/site'
 import Layout from '~/layouts/Layout.astro'
-import { getPoetriesConfig, pervNext } from '~/supports'
-import type { ChapterItem } from '~/types'
-import { slugify } from '~/utils'
+import { pervNext } from '~/supports'
+import type { ChapterItem, PoetryItem } from '~/types'
+import { combine } from '~/utils'
 
 export interface Props {
-  post: ChapterItem
+  post: PoetryItem
   index: number
   chapter: string
 }
 
 interface RouteItem {
-  params: { title: string }
+  params: { id: string }
   props: Props
 }
 
 export function getStaticPaths() {
   const res: RouteItem[] = []
   let index = 0
-  for (let i = 0; i < datas.content.length; i++) {
-    const { title, content } = datas.content[i]
+  for (let i = 0; i < guWenGuanZhi.content.length; i++) {
+    const { title, content } = guWenGuanZhi.content[i]
     for (let j = 0; j < content.length; j++) {
       const post = content[j]
       res.push({
-        params: {
-          title: slugify(title, post.chapter),
-        },
+        params: { id: post.id },
         props: { post, index, chapter: title },
       })
       index++
@@ -38,31 +37,42 @@ export function getStaticPaths() {
   return res
 }
 
-const poetry = getPoetriesConfig('shang-shu')!
+const poetry = books[Books.guwenguanzhi]
 
 const { title, id } = poetry
-const { post, chapter } = Astro.props
+const { traditional } = Astro.props.post
+const chapter = Astro.props.chapter
+const {
+  title: postTitle,
+  paragraphs,
+  source,
+  author,
+} = traditional as ChapterItem & { source: string; author: string }
 
 const { prev, next } = pervNext(
   getStaticPaths(),
   Astro.props.index,
   ({ params, props }) => ({
-    text: `${props.chapter}・${props.post.chapter}`,
-    link: `/${id}/${params.title}`,
+    text: `${props.chapter}・${props.post.title}`,
+    link: combine(id, params.id),
   }),
 )
 ---
 
-<Layout title={`${post.chapter} | ${title}`}>
+<Layout title={`${postTitle} | ${title}`}>
   <div class="py-6 px-5 md:px-10 pb-20">
     <Breadcrumb
       list={[{ text: title, active: true, link: `/${id}` }, { text: chapter }]}
     />
     <div class="pb-4">
       <h3 class="text-2xl font-bold text-brand mt-10 mb-6 text-center">
-        {post.chapter}
+        {postTitle}
       </h3>
-      <PostContent content={post.paragraphs} indent />
+      <p class="text-center">
+        <span class="mr-4">{source}</span>
+        <span>{author}</span>
+      </p>
+      <PostContent content={paragraphs} indent />
     </div>
     <PrevNext {prev} {next} />
   </div>

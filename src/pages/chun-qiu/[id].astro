@@ -2,35 +2,36 @@
 import Breadcrumb from '~/components/Breadcrumb.astro'
 import PostContent from '~/components/PostContent.astro'
 import PrevNext from '~/components/PrevNext.astro'
-import datas from '~/database/wenzimengqiu.json'
+import { books, chunQiu } from '~/config/books'
+import { Books } from '~/config/site'
 import Layout from '~/layouts/Layout.astro'
-import { getPoetriesConfig, pervNext } from '~/supports'
-import type { WenZiMengQiuItem } from '~/types'
-import { slugify } from '~/utils'
+import { pervNext } from '~/supports'
+import type { PoetryItem } from '~/types'
 
 export interface Props {
-  post: WenZiMengQiuItem
+  post: PoetryItem
   index: number
 }
 
 export function getStaticPaths() {
-  return datas.content.map((post: WenZiMengQiuItem, index) => ({
-    params: { title: slugify(post.title) },
+  return chunQiu.content.map((post, index) => ({
+    params: { id: post.id },
     props: { post, index },
   }))
 }
 
-const poetry = getPoetriesConfig('wen-zi-meng-qiu')!
+const book = books[Books.chunqiu]
 
-const { title, id } = poetry
-const { paragraphs, title: postTitle } = Astro.props.post
+const { title, id } = book
+const { traditional, simplified } = Astro.props.post
+const { title: postTitle, paragraphs } = traditional
 
 const { prev, next } = pervNext(
   getStaticPaths(),
   Astro.props.index,
   ({ params, props }) => ({
     text: props.post.title,
-    link: `/${id}/${params.title}`,
+    link: `/${id}/${params.id}`,
   }),
 )
 ---
