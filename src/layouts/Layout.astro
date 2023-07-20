@@ -5,7 +5,6 @@ import '~/styles/index.scss'
 import LayoutContent from '~/components/LayoutContent.astro'
 import LocalNav from '~/components/LocalNav.astro'
 import Navbar from '~/components/Navbar/index.astro'
-import PageFooter from '~/components/PageFooter.astro'
 import Siderbar from '~/components/Sidebar/Siderbar.astro'
 import { siteTitle } from '~/config/site'
 
@@ -40,7 +39,6 @@ const appearanceScript =
       <Siderbar />
       <LayoutContent>
         <slot />
-        <PageFooter />
       </LayoutContent>
     </div>
   </body>

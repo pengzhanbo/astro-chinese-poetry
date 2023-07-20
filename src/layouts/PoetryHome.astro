@@ -9,9 +9,7 @@ export interface Props {
   book: Books
 }
 
-const book = books[Astro.props.book]
-
-const { title, abstract } = book
+const { title, abstract } = books[Astro.props.book]
 ---
 
 <Layout title={title}>

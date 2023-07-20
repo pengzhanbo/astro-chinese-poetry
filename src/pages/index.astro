@@ -1,6 +1,7 @@
 ---
 import AutoLink from '~/components/AutoLink.astro'
 import BookCover from '~/components/BookCover.astro'
+import PageFooter from '~/components/PageFooter.astro'
 import { books } from '~/config/books'
 import { Books } from '~/config/site'
 import Layout from '~/layouts/Layout.astro'
@@ -89,4 +90,5 @@ const poetries: PoetryLink[] = [
       }
     </div>
   </main>
+  <PageFooter />
 </Layout>
