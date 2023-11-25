@@ -42,10 +42,9 @@
     "typescript", // Enable .ts
     "typescriptreact" // Enable .tsx
   ],
-  "prettier.documentSelectors": ["**/*.astro"],
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
   "scss.validate": false,
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
