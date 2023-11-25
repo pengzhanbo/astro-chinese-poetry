@@ -8,20 +8,22 @@ const nanoid = customAlphabet('1234567890', 10)
 
 export function getId(...args: string[]): string {
   const key = args.join('/')
-  if (!cache[key]) {
+  if (!cache[key])
     cache[key] = nanoid()
-  }
+
   return cache[key]
 }
 
 export async function loadPersistentId(): Promise<typeof cache> {
-  if (cache) return cache
+  if (cache)
+    return cache
 
   try {
     const content = await fs.promises.readFile(targetPath(filename), 'utf-8')
     cache = JSON.parse(content || '{}')
     return cache
-  } catch (e) {
+  }
+  catch (e) {
     // console.error(e)
     return (cache = {})
   }
@@ -40,15 +42,14 @@ function checkIds() {
   const map: Record<string, string[]> = {}
   Object.keys(cache).forEach((key) => {
     const id = cache[key]
-    if (!map[id]) {
+    if (!map[id])
       map[id] = []
-    }
+
     map[id].push(key)
   })
   Object.keys(map).forEach((key) => {
     const keys = map[key]
-    if (keys.length > 1) {
+    if (keys.length > 1)
       console.warn('warn ids:: ', keys)
-    }
   })
 }

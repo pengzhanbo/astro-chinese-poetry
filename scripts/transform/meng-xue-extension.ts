@@ -121,7 +121,7 @@ async function transformQianjiashi() {
           return {
             title: toSimple(chapter),
             content: (
-              paragraphs as { subchapter: string; paragraphs: string[] }[]
+              paragraphs as { subchapter: string, paragraphs: string[] }[]
             ).map(({ subchapter, paragraphs }) => {
               return {
                 id: getId(filename, type, chapter, subchapter, author),

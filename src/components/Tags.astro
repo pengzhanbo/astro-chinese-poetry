@@ -14,7 +14,7 @@ const className = Astro.props['class:list'] || Astro.props.class
   class:list={['flex flex-wrap items-center justify-center -mx-1', className]}
 >
   {
-    tags.map((tag) => (
+    tags.map(tag => (
       <span class="b-f mx-1 mb-2 inline-block rounded-sm bg-gray-50 px-1 text-sm text-text-1">
         {tag}
       </span>

@@ -25,15 +25,15 @@ const paragraphs = !split ? content : content.map(normalizeStr)
   ]}
 >
   {
-    paragraphs.map((paragraph) => (
+    paragraphs.map(paragraph => (
       <p class:list={[{ 'mx-4': flex, 'indent-8': indent }]}>
         {!isArray(paragraph)
           ? paragraph
-          : paragraph.map((par) => (
+          : paragraph.map(par => (
               <span class:list={[{ 'mr-4 last-of-type:mr-0': flex }]}>
                 {par}
               </span>
-            ))}
+          ))}
       </p>
     ))
   }

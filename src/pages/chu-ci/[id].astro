@@ -23,14 +23,14 @@ export function getStaticPaths() {
 const book = books[Books.chuci]
 
 const { title, id } = book
-const { traditional, simplified } = Astro.props.post
+const { traditional } = Astro.props.post
 
 const {
   title: postTitle,
   section,
   author,
   paragraphs,
-} = traditional as ChapterItem & { section: string; author: string }
+} = traditional as ChapterItem & { section: string, author: string }
 
 const { prev, next } = pervNext(
   getStaticPaths(),

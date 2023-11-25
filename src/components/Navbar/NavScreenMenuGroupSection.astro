@@ -11,7 +11,7 @@ const { text, items } = Astro.props
 
 <div class="nav-screen-menu-group-section">
   {text && <p class="title">{text}</p>}
-  {items.map((item) => <NavScreenMenuGroupLink {item} />)}
+  {items.map(item => <NavScreenMenuGroupLink {item} />)}
 </div>
 
 <style>

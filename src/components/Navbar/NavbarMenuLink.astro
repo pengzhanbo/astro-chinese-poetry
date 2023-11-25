@@ -1,7 +1,7 @@
 ---
 import AutoLink from '../AutoLink.astro'
 import type { NavItemWithLink } from '~/types'
-import { isActive } from '~/utils'
+import { getCId, isActive } from '~/utils'
 
 export interface Props {
   item: NavItemWithLink
@@ -9,6 +9,7 @@ export interface Props {
 
 const url = Astro.url.pathname
 const item = Astro.props.item
+const cid = getCId(Astro.props)
 
 const active = isActive(url, item.activeMatch || item.link, !!item.activeMatch)
 ---
@@ -20,6 +21,7 @@ const active = isActive(url, item.activeMatch || item.link, !!item.activeMatch)
   rel={item.rel}
   target={item.target}
   tabindex="0"
+  {...cid}
 />
 
 <style>

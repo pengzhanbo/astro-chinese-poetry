@@ -19,19 +19,21 @@ const groupId = `navScreenGroup-${text.replace(' ', '-').toLowerCase()}`
   </button>
   <div class="items" id={groupId}>
     {
-      items.map((item) =>
-        'link' in item ? (
+      items.map(item =>
+        'link' in item
+          ? (
           <div class="item">
             <NavScreenMenuGroupLink item={item as NavItemWithLink} />
           </div>
-        ) : (
+            )
+          : (
           <div class="group">
             <NavScreenMenuGroupSection
               text={item.text}
               items={item.items as NavItemWithLink[]}
             />
           </div>
-        ),
+            ),
       )
     }
   </div>

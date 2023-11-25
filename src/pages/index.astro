@@ -63,20 +63,23 @@ const poetries: PoetryLink[] = [
   <main class="home-wrapper px-6 pb-10">
     <div class="content">
       {
-        poetries.map((page) => (
+        poetries.map(page => (
           <div class="pb-6">
             <div class="mb-4">
-              {page.link ? (
+              {page.link
+                ? (
                 <AutoLink class="text-text-2" href={page.link} noIcon>
                   <BookCover title={page.text} />
                 </AutoLink>
-              ) : (
+                  )
+                : (
                 <p class="text-2xl font-bold pb-4">{page.text}</p>
-              )}
+                  )}
             </div>
-            {page.items ? (
+            {page.items
+              ? (
               <div class="flex flex-wrap items-center pl-6 -mx-8">
-                {page.items.map((item) => (
+                {page.items.map(item => (
                   <div class="mx-8 mb-8">
                     <AutoLink class="text-text-2" href={item.link} noIcon>
                       <BookCover title={item.text} />
@@ -84,7 +87,8 @@ const poetries: PoetryLink[] = [
                   </div>
                 ))}
               </div>
-            ) : null}
+                )
+              : null}
           </div>
         ))
       }

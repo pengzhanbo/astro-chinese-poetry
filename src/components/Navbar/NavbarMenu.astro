@@ -15,12 +15,14 @@ const className = Astro.props['class:list'] || Astro.props.class
 >
   <span id="main-nav-aria-label" class="visually-hidden">Main Navigation</span>
   {
-    navConfig.map((item) =>
-      'link' in item ? (
+    navConfig.map(item =>
+      'link' in item
+        ? (
         <NavbarMenuLink item={item} />
-      ) : (
+          )
+        : (
         <NavBarMenuGroup item={item} />
-      ),
+          ),
     )
   }
 </nav>

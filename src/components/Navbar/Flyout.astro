@@ -22,18 +22,20 @@ const className = Astro.props['class:list'] || Astro.props.class
     aria-label={label}
   >
     {
-      button ? (
+      button
+        ? (
         <span class="text">
           {button}
           <i class="text-icon">
             <IconChevronDown />
           </i>
         </span>
-      ) : (
+          )
+        : (
         <span class="icon">
           <IconMoreHorizontal />
         </span>
-      )
+          )
     }
   </button>
   <div class="menu">

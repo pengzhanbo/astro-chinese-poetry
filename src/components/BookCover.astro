@@ -11,7 +11,7 @@ const title = Astro.props.title.split('')
 
 <p class:list={['book-cover', className]}>
   <span class="book-cover-container">
-    <span class="title">{title.map((t) => <i>{t}</i>)}</span>
+    <span class="title">{title.map(t => <i>{t}</i>)}</span>
   </span>
   <span class="bg">
     <span class="img"></span>

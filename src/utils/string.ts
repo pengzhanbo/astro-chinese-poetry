@@ -1,3 +1,3 @@
-export const normalizeStr = (str: string) => {
+export function normalizeStr(str: string) {
   return str.trim().split(/\s/)
 }

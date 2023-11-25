@@ -54,7 +54,7 @@ addBook(Books.chuci, chuCi)
 
 function addBook(
   id: Books,
-  { title, abstract }: { title: string; abstract: string[] },
+  { title, abstract }: { title: string, abstract: string[] },
 ) {
   books[id] = {
     id,

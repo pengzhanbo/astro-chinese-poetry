@@ -23,7 +23,7 @@ export function getStaticPaths() {
 const book = books[Books.chunqiu]
 
 const { title, id } = book
-const { traditional, simplified } = Astro.props.post
+const { traditional } = Astro.props.post
 const { title: postTitle, paragraphs } = traditional
 
 const { prev, next } = pervNext(

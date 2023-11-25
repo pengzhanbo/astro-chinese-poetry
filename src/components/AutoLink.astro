@@ -1,7 +1,7 @@
 ---
 import IconExternal from './icons/IconExternal.astro'
 import type { BaseProps } from '~/types'
-import { isExternal as _isExternal, normalizeLink } from '~/utils'
+import { isExternal as _isExternal, getCId, normalizeLink } from '~/utils'
 
 export interface Props extends BaseProps {
   href?: string
@@ -24,10 +24,12 @@ const rel = props.rel || (isExternal ? 'noreferrer' : undefined)
 const href = isLink ? normalizeLink(_href) : undefined
 
 const className = props['class:list'] || props.class
+const cIds = getCId(props)
 ---
 
 {
-  isLink ? (
+  isLink
+    ? (
     <a
       class:list={[
         'auto-link',
@@ -38,17 +40,21 @@ const className = props['class:list'] || props.class
       {target}
       {rel}
       {tabindex}
+      {...cIds}
     >
       <slot>{text || href}</slot>
-      {isExternal && !noIcon ? (
+      {isExternal && !noIcon
+        ? (
         <span class="icon ml-1 -mt-[1px] text-text-3">
           <IconExternal />
         </span>
-      ) : null}
+          )
+        : null}
     </a>
-  ) : (
+      )
+    : (
     <span class:list={['auto-link', className]}>
       <slot>{text || href}</slot>
     </span>
-  )
+      )
 }

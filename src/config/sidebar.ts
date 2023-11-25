@@ -34,7 +34,7 @@ addSideBarConfig(
   Books.shijing,
   shiJing.content.reduce((res, item) => {
     const cate = `${item.chapter} · ${item.section}`
-    let chapters = res.find((s) => s.text === cate)
+    let chapters = res.find(s => s.text === cate)
     if (!chapters) {
       chapters = { text: cate, items: [], collapsed: false }
       res.push(chapters)
@@ -83,9 +83,9 @@ addSideBarConfig(
       link: id && !content ? combine(Books.qianjiashi, id) : undefined,
       items: content
         ? content.map(({ title, id }) => ({
-            text: title,
-            link: combine(Books.qianjiashi, id),
-          }))
+          text: title,
+          link: combine(Books.qianjiashi, id),
+        }))
         : undefined,
     })),
   })),
@@ -141,7 +141,7 @@ addSideBarConfig(
 addSideBarConfig(
   Books.chuci,
   chuCi.content.reduce((res, item) => {
-    let sections = res.find((s) => s.text === item.section)
+    let sections = res.find(s => s.text === item.section)
     if (!sections) {
       sections = { text: item.section, items: [] }
       res.push(sections)
@@ -158,7 +158,7 @@ function addSideBarConfig(id: string, config: SidebarOptions) {
   sidebarConfig[`/${id}`] = config
 }
 
-function normalSidebar(id: Books, content: { title: string; id: string }[]) {
+function normalSidebar(id: Books, content: { title: string, id: string }[]) {
   return content.map((item) => {
     const text = item.title
     return {

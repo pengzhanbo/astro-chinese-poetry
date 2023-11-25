@@ -39,7 +39,7 @@ function navScreenHandle() {
   let active = false
   hamburger?.addEventListener('click', () => toggleScreen(), false)
   window.addEventListener('hashchange', closeScreen, false)
-  navScreenLinks.forEach((link) =>
+  navScreenLinks.forEach(link =>
     link.addEventListener('click', closeScreen, false),
   )
 
@@ -57,11 +57,10 @@ function navScreenHandle() {
   })
 
   function toggleScreen() {
-    if (active) {
+    if (active)
       closeScreen()
-    } else {
+    else
       openScreen()
-    }
   }
 
   function closeScreenOnTabletWindow() {
@@ -86,7 +85,8 @@ function navScreenHandle() {
       navScreen?.classList.add('show')
       disableBodyScroll(navScreen!, { reserveScrollBarGap: true })
       setTimeout(() => navScreen?.classList.add('animation'), 0)
-    } else {
+    }
+    else {
       navScreen?.classList.remove('animation')
       setTimeout(() => {
         navScreen?.classList.remove('show')
@@ -117,11 +117,10 @@ function flyoutHandle() {
     button?.addEventListener(
       'click',
       () => {
-        if (button.hasAttribute('aria-expanded')) {
+        if (button.hasAttribute('aria-expanded'))
           button.removeAttribute('aria-expanded')
-        } else {
+        else
           button.setAttribute('aria-expanded', 'true')
-        }
       },
       false,
     )
@@ -130,11 +129,10 @@ function flyoutHandle() {
   document.addEventListener('focusin', () => {
     const activeEl = document.activeElement as HTMLElement
     flyoutList.forEach((flyout) => {
-      if (flyout === activeEl || flyout.contains(activeEl)) {
+      if (flyout === activeEl || flyout.contains(activeEl))
         flyout.children[0].setAttribute('aria-expanded', 'true')
-      } else {
+      else
         flyout.children[0].removeAttribute('aria-expanded')
-      }
     })
   })
 }
@@ -153,15 +151,14 @@ function initAppearance() {
 
   let userPreference = localStorage.getItem('poetry-appearance')
 
-  let isDark =
-    userPreference === 'auto' || userPreference === null
+  let isDark
+    = userPreference === 'auto' || userPreference === null
       ? query.matches
       : userPreference === 'dark'
 
   query.onchange = (e) => {
-    if (userPreference === 'auto') {
+    if (userPreference === 'auto')
       setClass((isDark = e.matches))
-    }
   }
 
   function toggle() {
@@ -172,8 +169,8 @@ function initAppearance() {
         ? 'auto'
         : 'dark'
       : query.matches
-      ? 'light'
-      : 'auto'
+        ? 'light'
+        : 'auto'
 
     localStorage.setItem('poetry-appearance', userPreference)
   }

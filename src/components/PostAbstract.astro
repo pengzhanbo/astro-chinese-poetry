@@ -21,6 +21,6 @@ const className = Astro.props['class:list'] || Astro.props.class
 >
   <div class="pt-5"><BookCover {title} /></div>
   <div class="flex-1 xl:ml-4">
-    {abstract.map((desc) => <p>{desc}</p>)}
+    {abstract.map(desc => <p>{desc}</p>)}
   </div>
 </div>

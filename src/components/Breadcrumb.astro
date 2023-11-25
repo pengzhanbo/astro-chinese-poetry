@@ -34,11 +34,13 @@ const list: BreadcrumbItem[] = [
             href={item.link}
             text={item.text}
           />
-          {i !== list.length - 1 ? (
+          {i !== list.length - 1
+            ? (
             <span class="icon mx-2 text-text-3">
               <IconArrowRight />
             </span>
-          ) : null}
+              )
+            : null}
         </li>
       ))
     }

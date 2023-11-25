@@ -47,7 +47,7 @@ const {
   paragraphs,
   source,
   author,
-} = traditional as ChapterItem & { source: string; author: string }
+} = traditional as ChapterItem & { source: string, author: string }
 
 const { prev, next } = pervNext(
   getStaticPaths(),

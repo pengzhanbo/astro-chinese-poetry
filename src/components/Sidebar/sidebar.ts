@@ -24,7 +24,7 @@ function sidebarItemHandle() {
   }
   Array.from(
     document.querySelectorAll('.sidebar-item[data-collasible] .item'),
-  ).forEach((item) => item.addEventListener('click', sidebarHandler, false))
+  ).forEach(item => item.addEventListener('click', sidebarHandler, false))
 }
 
 function sidebarHandler() {
@@ -38,7 +38,8 @@ function sidebarHandler() {
     if (sidebarOpen) {
       backdrop?.classList.add('show')
       setTimeout(() => backdrop?.classList.add('animation'), 0)
-    } else {
+    }
+    else {
       backdrop?.classList.remove('animation')
       setTimeout(() => backdrop?.classList.remove('show'), 250)
     }

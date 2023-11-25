@@ -5,21 +5,22 @@ import { getSidebar } from '~/supports/sidebar'
 const sidebar = getSidebar(Astro.url.pathname)
 
 const RE_PATH = /^\/|\/$/g
-const normalize = (url: string) => {
+function normalize(url: string) {
   return decodeURIComponent(`/${url.replace(RE_PATH, '')}/`)
 }
-sidebar &&
-  sidebar.forEach((item) => {
-    if (item.collapsed != null) {
-      item.collapsed = !item.items?.some(
-        (it) => it.link && normalize(Astro.url.pathname) === normalize(it.link),
-      )
-    }
-  })
+sidebar
+&& sidebar.forEach((item) => {
+  if (item.collapsed != null) {
+    item.collapsed = !item.items?.some(
+      it => it.link && normalize(Astro.url.pathname) === normalize(it.link),
+    )
+  }
+})
 ---
 
 {
-  sidebar ? (
+  sidebar
+    ? (
     <>
       <div class="backdrop" />
       <div class="sidebar-wrapper" id="sidebarEl">
@@ -28,7 +29,7 @@ sidebar &&
           <span id="sidebar-aria-label" class="visually-hidden">
             Sidebar Navigation
           </span>
-          {sidebar.map((item) => (
+          {sidebar.map(item => (
             <div class="group">
               <SidebarItem item={item} depth={0} />
             </div>
@@ -36,7 +37,8 @@ sidebar &&
         </nav>
       </div>
     </>
-  ) : null
+      )
+    : null
 }
 
 <script src="./sidebar.ts"></script>

@@ -14,15 +14,17 @@ const { items } = Astro.props
   {
     items && (
       <div class="items">
-        {items.map((item) =>
-          'link' in item ? (
+        {items.map(item =>
+          'link' in item
+            ? (
             <AMenuLink item={item} />
-          ) : (
+              )
+            : (
             <AMenuGroup
               text={item.text}
               items={item.items as NavItemWithLink[]}
             />
-          ),
+              ),
         )}
       </div>
     )

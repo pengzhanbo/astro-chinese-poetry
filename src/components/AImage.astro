@@ -2,28 +2,34 @@
 import type { ImgAttributes } from 'astro:assets'
 
 export interface Props extends ImgAttributes {
-  src: string | { light?: string; dark?: string }
+  src: string | { light?: string, dark?: string }
 }
 
-const { src: _src, ...other } = Astro.props
+const { src: _src, 'class:list': _l, class: _c, alt, ...other } = Astro.props
 const src = typeof _src === 'string' ? _src : undefined
 const mode = typeof _src === 'string' ? undefined : _src
 const className = Astro.props['class:list'] || Astro.props.class
 ---
 
 {
-  mode ? (
+  mode
+    ? (
     <>
       <Astro.self
+        alt={alt}
         class:list={['light', className]}
-        src={mode.light}
-        {...other}
+        src={mode.light || ''}
       />
-      <Astro.self class:list={['dark', className]} src={mode.dark} {...other} />
+      <Astro.self
+        alt={alt}
+        class:list={['dark', className]}
+        src={mode.dark || ''}
+      />
     </>
-  ) : (
-    src && <img {src} {...other} class:list={['a-image', className]} />
-  )
+      )
+    : (
+        src && <img {src} {alt} {...other} class:list={['a-image', className]} />
+      )
 }
 
 <style is:global>

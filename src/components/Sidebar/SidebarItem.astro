@@ -14,15 +14,14 @@ function containsActiveLink(
   path: string,
   items: SidebarItem | SidebarItem[],
 ): boolean {
-  if (Array.isArray(items)) {
-    return items.some((item) => containsActiveLink(path, item))
-  }
+  if (Array.isArray(items))
+    return items.some(item => containsActiveLink(path, item))
 
   return isActive(path, items.link)
     ? true
     : items.items
-    ? containsActiveLink(path, items.items)
-    : false
+      ? containsActiveLink(path, items.items)
+      : false
 }
 
 const { item, depth = 0 } = Astro.props
@@ -34,8 +33,8 @@ const isActiveLink = isActive(Astro.url.pathname, item.link)
 const hasActiveLink = isActiveLink
   ? true
   : item.items
-  ? containsActiveLink(Astro.url.pathname, item)
-  : false
+    ? containsActiveLink(Astro.url.pathname, item)
+    : false
 const collapsible = item.collapsed != null
 const collapsed = collapsible ? item.collapsed : false
 
@@ -43,8 +42,8 @@ const SectionTag = (hasChildren ? 'section' : 'div') as unknown as HTMLTag
 const TextTag = (!hasChildren
   ? 'p'
   : depth + 2 === 7
-  ? 'p'
-  : `h${depth + 2}`) as unknown as HTMLTag
+    ? 'p'
+    : `h${depth + 2}`) as unknown as HTMLTag
 ---
 
 <SectionTag
@@ -68,25 +67,29 @@ const TextTag = (!hasChildren
       <TextTag class="text">{item.text}</TextTag>
     </AutoLink>
     {
-      item.collapsed != null ? (
+      item.collapsed != null
+        ? (
         <div class="caret" role="button">
           <span class="icon caret-icon">
             <IconChevronRight />
           </span>
         </div>
-      ) : null
+          )
+        : null
     }
   </div>
   {
-    item.items && item.items.length ? (
+    item.items && item.items.length
+      ? (
       <div class="items">
         {depth < 5
-          ? item.items.map((item) => (
+          ? item.items.map(item => (
               <Astro.self item={item} depth={depth + 1} />
-            ))
+          ))
           : null}
       </div>
-    ) : null
+        )
+      : null
   }
 </SectionTag>
 

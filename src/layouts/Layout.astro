@@ -14,8 +14,8 @@ export interface Props {
 
 const { title } = Astro.props
 const pageTitle = title ? `${title} | ${siteTitle}` : siteTitle
-const appearanceScript =
-  ";(function(){var um=localStorage.getItem('poetry-appearance');var sdm=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;if(um==='dark'||(um!=='light'&&sdm)){document.documentElement.classList.add('dark');}})();"
+const appearanceScript
+  = ';(function(){var um=localStorage.getItem(\'poetry-appearance\');var sdm=window.matchMedia&&window.matchMedia(\'(prefers-color-scheme: dark)\').matches;if(um===\'dark\'||(um!==\'light\'&&sdm)){document.documentElement.classList.add(\'dark\');}})();'
 ---
 
 <!DOCTYPE html>
@@ -29,6 +29,7 @@ const appearanceScript =
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="icon" type="image/png" href="/logo.png" />
     <meta name="generator" content={Astro.generator} />
+    {/* eslint-disable-next-line astro/no-set-html-directive */}
     <script set:html={appearanceScript} />
     <title>{pageTitle}</title>
   </head>

@@ -13,7 +13,7 @@ const { fixed } = Astro.props
   class:list={[
     'navbar-wrapper',
     'top-0 left-0 z-10 w-full h-[var(--nav-height)] pointer-events-none transition-colors',
-    fixed ? 'fixed' : 'relative',
+    { fixed, relative: !fixed },
   ]}
 >
   <div

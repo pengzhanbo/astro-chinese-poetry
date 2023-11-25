@@ -12,7 +12,7 @@ const { text, items } = Astro.props
 
 <div class="menu-group">
   {text && <p class="title">{text}</p>}
-  {items.map((item) => <AMenuLink item={item} />)}
+  {items.map(item => <AMenuLink item={item} />)}
 </div>
 
 <style>

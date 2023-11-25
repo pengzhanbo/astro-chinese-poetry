@@ -33,7 +33,8 @@ export function getStaticPaths() {
           props: { post, index, chapter: title },
         })
         index++
-      } else {
+      }
+      else {
         for (let k = 0; k < post.content.length; k++) {
           const par = post.content[k]
           res.push({
